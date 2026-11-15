@@ -1,0 +1,2676 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>DompetKu Tiwi - Black & Neon Pink Bento Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ================= CSS BASE & BLACK-PINK BENTO THEME ================= */
+:root {
+  --bg-obsidian: #09090B;
+  --bg-frame: #0D0D0F;
+  --card-dark: #141417;
+  --card-elevated: #1C1C21;
+  --border-subtle: #26262C;
+  --primary: #FF2E93;
+  --primary-dark: #E11D48;
+  --primary-gradient: linear-gradient(135deg, #FF2E93 0%, #E11D48 100%);
+  --soft-rose: #F472B6;
+  --emerald: #10B981;
+  --text-main: #FFFFFF;
+  --text-muted: #A1A1AA;
+  --text-sub: #D4D4D8;
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--bg-obsidian);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(255, 46, 147, 0.14) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(225, 29, 72, 0.12) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: var(--text-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.hidden { display: none !important; }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.gap-1 { gap: 4px; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 16px; }
+
+/* Diagonal Stripe Bento Pattern */
+.bg-stripes-dark {
+  background-color: var(--card-dark);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 46, 147, 0.05) 0px,
+    rgba(255, 46, 147, 0.05) 3px,
+    transparent 3px,
+    transparent 9px
+  );
+}
+
+.bg-stripes-bar {
+  background-color: #1F1F25;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.14) 0px,
+    rgba(255, 255, 255, 0.14) 2.5px,
+    transparent 2.5px,
+    transparent 7.5px
+  );
+}
+
+/* SVG Icon Helper */
+.icon-svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  display: inline-block;
+  vertical-align: middle;
+}
+.icon-lg { width: 22px; height: 22px; }
+.icon-sm { width: 14px; height: 14px; }
+
+/* ================= CONTAINER UTAMA ================= */
+.app-frame {
+  width: 100%;
+  height: 100vh;
+  background: var(--bg-frame);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  body { padding: 24px; }
+  .app-frame {
+    max-width: 1120px;
+    height: 92vh;
+    min-height: 700px;
+    border-radius: 36px;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 50px rgba(255, 46, 147, 0.12);
+    flex-direction: row;
+  }
+}
+
+/* ================= DRAWER OVERLAY ================= */
+.drawer-backdrop {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1040;
+  display: none;
+}
+.drawer-backdrop.show { display: block; }
+
+.side-drawer {
+  position: fixed;
+  top: 0; left: -300px;
+  width: 280px; height: 100%;
+  background: rgba(20, 20, 23, 0.96);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-right: 1px solid var(--border-subtle);
+  color: white;
+  z-index: 1050;
+  transition: left 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 15px 0 40px rgba(0,0,0,0.6);
+}
+.side-drawer.open { left: 0; }
+
+.drawer-header {
+  font-size: 16px;
+  font-weight: 800;
+  color: #FFFFFF;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.drawer-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  color: var(--text-sub);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 4px;
+}
+.drawer-menu-item:hover {
+  background: rgba(255, 46, 147, 0.15);
+  color: #FF2E93;
+}
+
+/* ================= SIDEBAR DESKTOP ================= */
+.desktop-sidebar { display: none; }
+
+@media (min-width: 768px) {
+  .desktop-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 275px;
+    background: #111114;
+    color: white;
+    padding: 28px 20px;
+    justify-content: space-between;
+    border-right: 1px solid var(--border-subtle);
+  }
+
+  .brand-logo {
+    font-size: 19px;
+    font-weight: 900;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    letter-spacing: -0.4px;
+  }
+
+  .user-profile-card {
+    background: var(--card-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .sidebar-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    text-align: left;
+  }
+
+  .sidebar-btn:hover {
+    background: var(--card-elevated);
+    color: white;
+    border-color: var(--border-subtle);
+  }
+
+  .sidebar-btn.active {
+    background: var(--primary-gradient);
+    color: #09090B;
+    font-weight: 800;
+    box-shadow: 0 8px 22px rgba(255, 46, 147, 0.3);
+  }
+}
+
+/* ================= MAIN CONTENT WRAPPER ================= */
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-frame);
+}
+
+.app-header {
+  display: none;
+  background: rgba(13, 13, 15, 0.85);
+  backdrop-filter: blur(20px);
+  color: var(--text-main);
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .app-header { display: block; }
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  color: #09090B;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-bottom: 120px;
+}
+.content-area::-webkit-scrollbar { width: 4px; }
+.content-area::-webkit-scrollbar-thumb { background: #27272A; border-radius: 10px; }
+
+@media (min-width: 768px) {
+  .content-area {
+    padding: 28px;
+    padding-bottom: 40px;
+  }
+}
+
+/* ================= BENTO CARDS & BUTTONS ================= */
+.card {
+  background: var(--card-dark);
+  border-radius: var(--radius-xl);
+  padding: 22px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  position: relative;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.btn {
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn:active { transform: scale(0.97); }
+.btn-indigo { 
+  background: var(--primary-gradient); 
+  color: #09090B; 
+  box-shadow: 0 8px 22px rgba(255, 46, 147, 0.3);
+}
+.btn-indigo:hover { filter: brightness(1.08); }
+.btn-emerald { 
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%); 
+  color: #09090B; 
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.25);
+}
+.btn-gray { 
+  background: var(--card-elevated); 
+  color: var(--text-main); 
+  border-color: var(--border-subtle);
+}
+.btn-gray:hover { border-color: rgba(255, 46, 147, 0.45); }
+
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  background: #09090B;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  color: #FFFFFF;
+  outline: none;
+  margin-top: 6px;
+  margin-bottom: 14px;
+  transition: all 0.2s ease;
+}
+.form-control::placeholder { color: #52525B; }
+.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(255, 46, 147, 0.18);
+}
+
+/* ================= MODALS ================= */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.modal-card {
+  background: #141417;
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: var(--radius-xl);
+  padding: 26px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85), 0 0 40px rgba(255, 46, 147, 0.12);
+}
+
+/* ================= CALCULATOR ================= */
+.calc-display {
+  background: #09090B;
+  color: #FF2E93;
+  font-size: 28px;
+  font-weight: 900;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  text-align: right;
+  margin-bottom: 16px;
+  min-height: 64px;
+  word-break: break-all;
+  border: 1px solid var(--border-subtle);
+}
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.calc-btn {
+  padding: 14px 8px;
+  font-size: 16px;
+  font-weight: 800;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--card-elevated);
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.calc-btn:active { background: #27272F; transform: scale(0.95); }
+.calc-btn-op { background: rgba(255, 46, 147, 0.15); color: #F472B6; border-color: rgba(255, 46, 147, 0.3); }
+.calc-btn-eq { background: var(--primary-gradient); color: #09090B; border: none; grid-column: span 2; }
+.calc-btn-clear { background: rgba(225, 29, 72, 0.2); color: #FB7185; border-color: rgba(225, 29, 72, 0.35); }
+
+/* ================= FLOATING GLASSMORPHIC PILL FOOTER ================= */
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 16px;
+  width: calc(100% - 28px);
+  max-width: 410px;
+  border-radius: 999px;
+  background: rgba(28, 28, 34, 0.85);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 10px;
+  z-index: 50;
+}
+@media (min-width: 768px) {
+  .bottom-nav { display: none; }
+}
+
+.nav-btn {
+  border: none;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  gap: 3px;
+  transition: all 0.2s;
+}
+.nav-btn.active { color: #FFFFFF; }
+.nav-ico {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--text-muted);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-btn.active .nav-ico {
+  background: #FFFFFF;
+  color: #09090B;
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.25);
+}
+
+/* ================= FLOATING ACTION BUTTON ================= */
+.fab {
+  position: fixed;
+  bottom: 94px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  color: #09090B;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 30px rgba(255, 46, 147, 0.45);
+  cursor: pointer;
+  z-index: 60;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fab:hover { transform: scale(1.08); }
+.fab:active { transform: scale(0.92); }
+
+@media (min-width: 768px) {
+  .fab {
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* ================= CHART BARS (STRIPED & NEON PINK BENTO) ================= */
+.chart-bar-group {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 120px;
+  width: 100%;
+  justify-content: center;
+}
+.chart-bar {
+  border-radius: 999px;
+  transition: height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  min-width: 12px;
+  max-width: 18px;
+  flex: 1;
+}
+
+.progress-bg { background: #26262C; border-radius: 999px; height: 12px; overflow: hidden; margin-top: 8px; }
+.progress-fill { background: #FFFFFF; height: 100%; width: 0%; transition: width 0.4s ease; border-radius: 999px; }
+
+.tx-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: var(--card-elevated);
+  border-radius: var(--radius-lg);
+  font-size: 13px;
+  border: 1px solid var(--border-subtle);
+  margin-bottom: 10px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.tx-item:hover {
+  transform: translateX(3px);
+  border-color: rgba(255, 46, 147, 0.4);
+}
+
+.receipt-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 46, 147, 0.18);
+  color: #F472B6;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 46, 147, 0.3);
+}
+
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 46, 147, 0.16);
+  color: #F472B6;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 46, 147, 0.3);
+}
+
+.note-card {
+  background: var(--card-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.note-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 46, 147, 0.45);
+}
+
+/* ================= CALENDAR ================= */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+  text-align: center;
+}
+.cal-day-head {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--soft-rose);
+  padding: 4px 0;
+  text-transform: uppercase;
+}
+.cal-date-cell {
+  background: var(--card-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 8px 2px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #FFFFFF;
+  cursor: pointer;
+  min-height: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s;
+}
+.cal-date-cell.empty {
+  background: transparent;
+  border: none;
+  cursor: default;
+}
+.cal-date-cell.active-date {
+  background: var(--primary-gradient);
+  color: #09090B;
+  font-weight: 900;
+  border-color: transparent;
+  box-shadow: 0 6px 18px rgba(255, 46, 147, 0.35);
+}
+.cal-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #FF2E93;
+  margin-top: 2px;
+}
+.cal-date-cell.active-date .cal-dot { background: #09090B; }
+
+/* ================= BENTO HERO SECTION (DOMPETTIWI) ================= */
+.gp-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 4px;
+}
+.gp-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: #FFFFFF;
+}
+.gp-greet {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-weight: 600;
+}
+.gp-hero-title {
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.15;
+  color: #FFFFFF;
+  letter-spacing: -0.6px;
+  margin-top: 2px;
+}
+
+/* Main Electric Neon Pink Bento Hero Card */
+.gp-wallet-card {
+  background: var(--primary-gradient);
+  color: #09090B;
+  border-radius: var(--radius-xl);
+  padding: 22px;
+  margin-top: 12px;
+  box-shadow: 0 16px 40px rgba(255, 46, 147, 0.32);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+.gp-wallet-card:active { transform: scale(0.98); }
+.gp-wallet-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(9, 9, 11, 0.78);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: 0.4px;
+}
+.gp-wallet-badge {
+  background: #09090B;
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+.gp-balance {
+  font-size: 32px;
+  font-weight: 900;
+  margin-top: 6px;
+  letter-spacing: -0.8px;
+  color: #09090B;
+}
+.gp-wallet-sub {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(9, 9, 11, 0.75);
+  margin-top: 4px;
+}
+
+/* Quick Action Row inside Hero Bento */
+.gp-quick {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(9, 9, 11, 0.14);
+  position: relative;
+  z-index: 2;
+}
+.gp-quick-btn {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #09090B;
+  cursor: pointer;
+}
+.gp-ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #09090B;
+  color: #FF2E93;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+.gp-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 4px;
+}
+.gp-section-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+.gp-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+.gp-chips::-webkit-scrollbar { display: none; }
+.gp-chip {
+  flex-shrink: 0;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--card-dark);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--text-sub);
+  cursor: pointer;
+}
+.gp-chip.active {
+  background: #FFFFFF;
+  color: #09090B;
+  border-color: #FFFFFF;
+}
+.gp-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.gp-services {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  text-align: center;
+}
+.gp-service-btn {
+  background: var(--card-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 14px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+.gp-service-btn:hover { border-color: rgba(255, 46, 147, 0.5); }
+.gp-service-btn .gp-ico {
+  background: rgba(255, 46, 147, 0.16);
+  color: #FF2E93;
+  border: 1px solid rgba(255, 46, 147, 0.3);
+  width: 46px;
+  height: 46px;
+  box-shadow: none;
+}
+
+/* ================= LOGIN SCREEN (BLACK & NEON PINK) ================= */
+#modalLogin.modal-overlay {
+  background: var(--bg-obsidian);
+  backdrop-filter: none;
+  padding: 24px;
+}
+.login-wrap {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  text-align: center;
+}
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  color: #FFFFFF;
+}
+.login-photo {
+  width: 196px;
+  height: 196px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 85%;
+  border: 3px solid #FF2E93;
+  box-shadow: 0 0 40px rgba(255, 46, 147, 0.35);
+}
+.login-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.login-btn {
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.login-btn:active { transform: scale(0.98); }
+.login-btn-primary {
+  background: #FF2E93;
+  color: #09090B;
+  box-shadow: 0 12px 30px rgba(255, 46, 147, 0.35);
+}
+.login-btn-dark {
+  background: #1C1C21;
+  color: #FFFFFF;
+  border: 1px solid #2E2E36;
+}
+
+/* ================= MODERN PRINT / PDF STYLES (LIGHT FOR PAPER) ================= */
+.pdf-table-container { display: block; width: 100%; overflow-x: auto; }
+.pdf-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  color: #FFFFFF;
+  margin-top: 12px;
+}
+.pdf-table th {
+  background: #FF2E93;
+  color: #09090B;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 800;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.pdf-table th:first-child { border-top-left-radius: 10px; }
+.pdf-table th:last-child { border-top-right-radius: 10px; text-align: right; }
+.pdf-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+.pdf-table tr:nth-child(even) td { background: rgba(255, 255, 255, 0.02); }
+
+@media print {
+  @page { size: A4 portrait; margin: 15mm 18mm; }
+  body {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #111827 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .app-frame {
+    max-width: 100% !important;
+    height: auto !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+  }
+  .desktop-sidebar, .bottom-nav, .fab, .app-header, .drawer-backdrop, .side-drawer, .modal-overlay, #tabBeranda, #tabPemasukan, #tabPengeluaran, #tabTabungan, #tabCatatan, #tabKalender, .no-print, button {
+    display: none !important;
+  }
+  #tabRekapanBulanan { display: block !important; padding: 0 !important; }
+  .card { background: #ffffff !important; border: 1px solid #e5e7eb !important; box-shadow: none !important; color: #111827 !important; }
+  .print-header {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #e11d48;
+    margin-bottom: 20px;
+  }
+  .print-header-brand { font-size: 20px; font-weight: 900; color: #e11d48; }
+  .print-header-sub { font-size: 11px; color: #4b5563; margin-top: 2px; }
+  .print-header-date { font-size: 12px; font-weight: 700; background: #fff1f2; color: #be123c; padding: 6px 14px; border-radius: 20px; border: 1px solid #fecdd3; }
+  .print-metrics-grid { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 12px !important; margin-bottom: 20px !important; }
+  .print-metric-card { border: 1px solid #e5e7eb !important; border-radius: 12px !important; padding: 12px !important; background: #f9fafb !important; }
+  .print-metric-card.highlight { background: #fff1f2 !important; border-color: #fecdd3 !important; }
+  .print-metric-label { font-size: 10px !important; font-weight: 700 !important; color: #6b7280 !important; text-transform: uppercase !important; }
+  .print-metric-value { font-size: 16px !important; font-weight: 900 !important; color: #111827 !important; margin-top: 4px !important; }
+  .pdf-table { font-size: 11px !important; color: #111827 !important; }
+  .pdf-table th { background: #be123c !important; color: #ffffff !important; }
+  .pdf-table td { border-bottom-color: #e5e7eb !important; color: #111827 !important; }
+  .pdf-table tr:nth-child(even) td { background: #fff1f2 !important; }
+  .print-footer { display: flex !important; justify-content: space-between; margin-top: 30px; padding-top: 12px; border-top: 1px solid #e5e7eb; font-size: 10px; color: #9ca3af; }
+}
+.print-header, .print-metrics-grid, .print-footer { display: none; }
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sheetUp { from { opacity: 0; transform: translateY(24px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes tabIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.modal-overlay { animation: fadeIn 0.2s ease both; }
+.modal-card { animation: sheetUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.content-area > div { animation: tabIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
+</style>
+</head>
+<body>
+
+<!-- BACKDROP & SIDE DRAWER -->
+<div class="drawer-backdrop" id="drawerBackdrop" onclick="toggleDrawer()"></div>
+<div class="side-drawer" id="sideDrawer">
+  <div>
+    <div class="drawer-header">
+      <div class="flex items-center gap-2">
+        <svg viewBox="0 0 40 40" width="24" height="24" aria-hidden="true">
+          <path d="M6 14 C6 6 10 4 16 4 H32" fill="none" stroke="#FF2E93" stroke-width="5" stroke-linecap="round"/>
+          <rect x="4" y="13" width="30" height="24" rx="8" fill="#FF2E93"/>
+          <rect x="18" y="20" width="5" height="10" rx="2.5" fill="#09090B"/>
+        </svg>
+        <span>dompettiwi</span>
+      </div>
+      <button onclick="toggleDrawer()" style="background:none; border:none; color:#A1A1AA; font-size:18px; cursor:pointer;">✕</button>
+    </div>
+    <div class="drawer-menu-item" onclick="navigateFromDrawer('Beranda')">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Overview Keuangan</span>
+    </div>
+    <div class="drawer-menu-item" onclick="navigateFromDrawer('RekapanBulanan')">
+      <svg class="icon-svg" viewBox="0 0 24 24"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+      <span>Rekapan Per Bulan</span>
+    </div>
+    <div class="drawer-menu-item" onclick="navigateFromDrawer('Kalender')">
+      <svg class="icon-svg" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+      <span>Kalender Keuangan</span>
+    </div>
+    <div class="drawer-menu-item" onclick="openModal('modalSaldo'); toggleDrawer();">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0-0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3v4a1 1 0 0 1-1 1H5a2 2 0 0 1-2-2V7"/></svg>
+      <span>Rincian Saldo Bersih</span>
+    </div>
+    <div class="drawer-menu-item" onclick="navigateFromDrawer('Pemasukan')">
+      <svg class="icon-svg" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+      <span>Catatan Pemasukan</span>
+    </div>
+    <div class="drawer-menu-item" onclick="navigateFromDrawer('Pengeluaran')">
+      <svg class="icon-svg" viewBox="0 0 24 24"><line x1="12" x2="12" y1="19" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+      <span>Catatan Pengeluaran</span>
+    </div>
+    <div class="drawer-menu-item" onclick="navigateFromDrawer('Tabungan')">
+      <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      <span>Target Tabungan</span>
+    </div>
+    <div class="drawer-menu-item" onclick="navigateFromDrawer('Catatan')">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>
+      <span>Catatan Pribadi</span>
+    </div>
+    <div class="drawer-menu-item" onclick="openModal('modalKalkulator'); toggleDrawer();">
+      <svg class="icon-svg" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/></svg>
+      <span>Kalkulator</span>
+    </div>
+    <div class="drawer-menu-item" onclick="openModal('modalBackup'); toggleDrawer();">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+      <span>Backup & Restore</span>
+    </div>
+  </div>
+  <div style="font-size: 11px; color: #71717A; text-align: center; padding-top: 12px; border-top: 1px solid var(--border-subtle);">
+    DompetKu Tiwi • Black & Pink Bento
+  </div>
+</div>
+
+<div class="app-frame">
+  <!-- ================= DESKTOP SIDEBAR ================= -->
+  <aside class="desktop-sidebar">
+    <div>
+      <div class="brand-logo">
+        <svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true">
+          <path d="M6 14 C6 6 10 4 16 4 H32" fill="none" stroke="#FF2E93" stroke-width="5" stroke-linecap="round"/>
+          <rect x="4" y="13" width="30" height="24" rx="8" fill="#FF2E93"/>
+          <rect x="18" y="20" width="5" height="10" rx="2.5" fill="#09090B"/>
+        </svg>
+        <span>dompettiwi</span>
+      </div>
+      <div class="user-profile-card">
+        <div class="avatar" id="dtAvatar">T</div>
+        <div>
+          <div style="font-size: 10px; color: var(--text-muted);">Pengguna Aktif</div>
+          <div style="font-size: 14px; font-weight: 800; color: #FFFFFF;" id="dtDisplayName">Tiwi</div>
+        </div>
+      </div>
+      <div class="sidebar-menu">
+        <button class="sidebar-btn active" id="sideNavBeranda" onclick="switchTab('Beranda')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Overview</span>
+        </button>
+        <button class="sidebar-btn" id="sideNavRekapanBulanan" onclick="switchTab('RekapanBulanan')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+          <span>Rekapan Bulanan</span>
+        </button>
+        <button class="sidebar-btn" id="sideNavKalender" onclick="switchTab('Kalender')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+          <span>Kalender</span>
+        </button>
+        <button class="sidebar-btn" id="sideNavPemasukan" onclick="switchTab('Pemasukan')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+          <span>Pemasukan</span>
+        </button>
+        <button class="sidebar-btn" id="sideNavPengeluaran" onclick="switchTab('Pengeluaran')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><line x1="12" x2="12" y1="19" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+          <span>Pengeluaran</span>
+        </button>
+        <button class="sidebar-btn" id="sideNavTabungan" onclick="switchTab('Tabungan')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <span>Tabungan</span>
+        </button>
+        <button class="sidebar-btn" id="sideNavCatatan" onclick="switchTab('Catatan')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>
+          <span>Catatan Pribadi</span>
+        </button>
+        <button class="sidebar-btn" onclick="openModal('modalKalkulator')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/></svg>
+          <span>Kalkulator</span>
+        </button>
+      </div>
+    </div>
+    <div class="flex flex-col gap-2">
+      <button class="btn btn-gray" onclick="openModal('modalBackup')">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+        <span>Backup Data</span>
+      </button>
+      <button class="btn btn-gray" style="color: #FB7185; border-color: rgba(251, 113, 133, 0.25);" onclick="resetData()">
+        <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        <span>Reset Data</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT WRAPPER ================= -->
+  <div class="main-wrapper">
+    <!-- HEADER APLIKASI DESKTOP -->
+    <div class="app-header">
+      <div class="flex justify-between items-center" id="desktopTopHeader">
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 style="font-size: 18px; font-weight: 800; color: #FFFFFF;" id="pageTitle">Overview Keuangan</h2>
+            <span class="badge-tag">Black & Pink Bento</span>
+          </div>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Kelola arus kas & tabungan Anda secara transparan & efisien.</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn btn-gray" style="width: auto;" onclick="openModal('modalKalkulator')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/></svg>
+            <span>Kalkulator</span>
+          </button>
+          <button class="btn btn-indigo" style="width: auto;" id="headerActionBtn" onclick="openModal('modalTambah')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+            <span>Catat Transaksi</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN SCROLLABLE CONTENT -->
+    <div class="content-area">
+      
+      <!-- ================= TAB 1: BERANDA ================= -->
+      <div id="tabBeranda" class="flex flex-col gap-3">
+
+        <!-- TOPBAR LOGO DOMPETTIWI + MENU BUTTON -->
+        <div class="gp-topbar">
+          <div class="gp-logo">
+            <svg viewBox="0 0 40 40" width="32" height="32" aria-hidden="true">
+              <path d="M6 14 C6 6 10 4 16 4 H32" fill="none" stroke="#FF2E93" stroke-width="5" stroke-linecap="round"/>
+              <rect x="4" y="13" width="30" height="24" rx="8" fill="#FF2E93"/>
+              <rect x="18" y="20" width="5" height="10" rx="2.5" fill="#09090B"/>
+            </svg>
+            <span>dompettiwi</span>
+          </div>
+          <button class="avatar" onclick="toggleDrawer()" aria-label="Menu" style="cursor:pointer; padding:0; background: var(--card-elevated); border: 1px solid var(--border-subtle); color: #FFFFFF;">
+            <svg class="icon-svg icon-lg" viewBox="0 0 24 24"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <div>
+          <div class="gp-greet">Halo, <span id="heroName">Tiwi</span> 👋</div>
+          <h1 class="gp-hero-title">Kelola arus kas<br>finansialmu</h1>
+        </div>
+
+        <!-- HERO BENTO CARD: NEON PINK MAIN BALANCE -->
+        <div class="gp-wallet-card" onclick="openModal('modalSaldo')">
+          <!-- Decorative Organic Line Accent -->
+          <svg style="position:absolute; right:-18px; top:10px; width:160px; height:130px; opacity:0.22; pointer-events:none;" viewBox="0 0 200 160" fill="none">
+            <path d="M10 85C55 72 108 92 98 122C88 152 52 135 65 104C78 73 135 70 175 112" stroke="#09090B" stroke-width="7" stroke-linecap="round"/>
+          </svg>
+
+          <div class="gp-wallet-label">
+            <span>KEKAYAAN BERSIH</span>
+            <span class="gp-wallet-badge">Rincian ›</span>
+          </div>
+          <div class="gp-balance" id="txtNetWorth">Rp 0</div>
+          <div class="gp-wallet-sub">Ketuk kartu untuk melihat saldo E-Wallet & Cash</div>
+
+          <div class="gp-quick" onclick="event.stopPropagation()">
+            <button class="gp-quick-btn" onclick="openModal('modalTambah')">
+              <span class="gp-ico"><svg class="icon-svg icon-lg" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg></span>
+              <span>Catat</span>
+            </button>
+            <button class="gp-quick-btn" onclick="openModal('modalTambah','income')">
+              <span class="gp-ico"><svg class="icon-svg icon-lg" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></span>
+              <span>Pemasukan</span>
+            </button>
+            <button class="gp-quick-btn" onclick="openModal('modalTambah','expense')">
+              <span class="gp-ico"><svg class="icon-svg icon-lg" viewBox="0 0 24 24"><line x1="12" x2="12" y1="19" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></span>
+              <span>Pengeluaran</span>
+            </button>
+            <button class="gp-quick-btn" onclick="openModal('modalKalkulator')">
+              <span class="gp-ico"><svg class="icon-svg icon-lg" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/></svg></span>
+              <span>Kalkulator</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- BODY BENTO SECTIONS -->
+        <div class="gp-body">
+
+          <!-- Category Filter Chips -->
+          <div class="gp-chips">
+            <button class="gp-chip active" id="chip-ALL" onclick="setFilter('ALL')">Semua</button>
+            <button class="gp-chip" id="chip-income" onclick="setFilter('income')">Pemasukan</button>
+            <button class="gp-chip" id="chip-expense" onclick="setFilter('expense')">Pengeluaran</button>
+            <button class="gp-chip" id="chip-savings" onclick="setFilter('savings')">Tabungan</button>
+          </div>
+
+          <!-- 2-Column Income & Expense Bento Cards -->
+          <div class="gp-two">
+            <div class="card bg-stripes-dark" style="padding: 18px;">
+              <div class="flex justify-between items-center" style="margin-bottom: 10px;">
+                <span style="width: 32px; height: 32px; border-radius: 50%; background: rgba(16, 185, 129, 0.16); color: #10B981; display: flex; align-items: center; justify-content: center;">
+                  <svg class="icon-svg icon-sm" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+                </span>
+                <span style="font-size: 10px; font-weight: 800; color: #10B981;">MASUK</span>
+              </div>
+              <div style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Total Pemasukan</div>
+              <div style="font-size: 17px; font-weight: 900; color: #10B981; margin-top: 4px;" id="dashInc">Rp 0</div>
+            </div>
+
+            <div class="card bg-stripes-dark" style="padding: 18px;">
+              <div class="flex justify-between items-center" style="margin-bottom: 10px;">
+                <span style="width: 32px; height: 32px; border-radius: 50%; background: rgba(255, 46, 147, 0.16); color: #FF2E93; display: flex; align-items: center; justify-content: center;">
+                  <svg class="icon-svg icon-sm" viewBox="0 0 24 24"><line x1="12" x2="12" y1="19" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+                </span>
+                <span style="font-size: 10px; font-weight: 800; color: #FF2E93;">KELUAR</span>
+              </div>
+              <div style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Total Pengeluaran</div>
+              <div style="font-size: 17px; font-weight: 900; color: #FF2E93; margin-top: 4px;" id="dashExp">Rp 0</div>
+            </div>
+          </div>
+
+          <!-- Status Bulan Ini Bento Card -->
+          <div class="card" id="statusCard" style="border-left: 5px solid #10B981;">
+            <div class="flex justify-between items-center" style="margin-bottom: 6px;">
+              <span style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Status Bulan Ini</span>
+              <span id="statusBadge" style="font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 999px; background: rgba(16, 185, 129, 0.16); color: #10B981;">Belum Ada Data</span>
+            </div>
+            <div style="font-size: 15px; font-weight: 800; color: #FFFFFF;" id="statusTitle">Evaluasi Arus Kas</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.5;" id="statusDesc">Tambahkan catatan transaksi untuk mulai menganalisis rasio pengeluaran Anda.</div>
+          </div>
+
+          <!-- Menu Cepat Bento Grid -->
+          <div class="card">
+            <div class="gp-section-title" style="margin-bottom: 14px;">Menu Cepat</div>
+            <div class="gp-services">
+              <button class="gp-service-btn" onclick="switchTab('Tabungan')">
+                <span class="gp-ico"><svg class="icon-svg icon-lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+                <span>Tabungan</span>
+              </button>
+              <button class="gp-service-btn" onclick="switchTab('Kalender')">
+                <span class="gp-ico"><svg class="icon-svg icon-lg" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg></span>
+                <span>Kalender</span>
+              </button>
+              <button class="gp-service-btn" onclick="switchTab('RekapanBulanan')">
+                <span class="gp-ico"><svg class="icon-svg icon-lg" viewBox="0 0 24 24"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg></span>
+                <span>Rekapan</span>
+              </button>
+              <button class="gp-service-btn" onclick="switchTab('Catatan')">
+                <span class="gp-ico"><svg class="icon-svg icon-lg" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+                <span>Catatan</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Grafik Bulanan Bento Card -->
+          <div class="card">
+            <div class="flex justify-between items-center" style="margin-bottom: 12px;">
+              <div>
+                <div style="font-size: 15px; font-weight: 800; color: #FFFFFF;">Statistik Bulanan</div>
+                <div style="font-size: 11px; color: var(--text-muted);">6 Bulan Terakhir</div>
+              </div>
+              <div class="flex items-center gap-2" style="font-size: 10px; font-weight: 800;">
+                <span style="color: #10B981;">● Masuk</span>
+                <span style="color: #FF2E93;">● Keluar</span>
+              </div>
+            </div>
+            <div id="chartContainer" class="flex justify-between items-end" style="height: 140px; padding-top: 10px; gap: 10px;"></div>
+          </div>
+
+          <!-- Riwayat Transaksi Bento Card -->
+          <div class="card">
+            <div class="flex justify-between items-center" style="margin-bottom: 12px;">
+              <span style="font-size: 15px; font-weight: 800; color: #FFFFFF;">Riwayat Transaksi</span>
+              <span class="badge-tag" id="txCount">0 Catatan</span>
+            </div>
+            <div class="flex gap-2" style="margin-bottom: 14px;">
+              <input type="text" id="searchTxInput" class="form-control" style="margin: 0; font-size: 12px;" placeholder="Cari transaksi..." onkeyup="render()">
+              <select id="filterCategorySelect" class="form-control" style="margin: 0; font-size: 12px; width: 130px;" onchange="render(); syncChips()">
+                <option value="ALL">Semua</option>
+                <option value="income">Pemasukan</option>
+                <option value="expense">Pengeluaran</option>
+                <option value="savings">Tabungan</option>
+              </select>
+            </div>
+            <div id="listRiwayat">
+              <div style="text-align: center; color: var(--text-muted); font-size: 12px; padding: 28px 0;">Belum ada transaksi tercatat</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ================= TAB: REKAPAN BULANAN & EKSPOR PDF ================= -->
+      <div id="tabRekapanBulanan" class="flex flex-col gap-3 hidden">
+        <!-- HEADER PRINT MODERNISED (PRINT ONLY) -->
+        <div class="print-header">
+          <div>
+            <div class="print-header-brand">DOMPETKU TIWI</div>
+            <div class="print-header-sub">Laporan Keuangan & Arus Kas Bulanan Eksklusif</div>
+          </div>
+          <div class="print-header-date" id="printPeriodTitle">Bulan Oktober 2026</div>
+        </div>
+
+        <!-- METRICS GRID PRINT MODERNISED (PRINT ONLY) -->
+        <div class="print-metrics-grid">
+          <div class="print-metric-card">
+            <div class="print-metric-label">Pemasukan</div>
+            <div class="print-metric-value" style="color: #059669;" id="printIncVal">Rp 0</div>
+          </div>
+          <div class="print-metric-card">
+            <div class="print-metric-label">Pengeluaran</div>
+            <div class="print-metric-value" style="color: #e11d48;" id="printExpVal">Rp 0</div>
+          </div>
+          <div class="print-metric-card">
+            <div class="print-metric-label">Rata-Rata Harian</div>
+            <div class="print-metric-value" id="printDailyAvgVal">Rp 0</div>
+          </div>
+          <div class="print-metric-card highlight">
+            <div class="print-metric-label">Saldo Bersih</div>
+            <div class="print-metric-value" style="color: #be123c;" id="printNetVal">Rp 0</div>
+          </div>
+        </div>
+
+        <!-- LAYOUT LAYAR WEBPAGE REKAPAN -->
+        <div class="card flex flex-col gap-2 no-print">
+          <div class="flex justify-between items-center">
+            <span style="font-size: 14px; font-weight: 800; color: #FFFFFF;">Pilih Periode Bulan</span>
+          </div>
+          <select id="selectMonthPeriod" class="form-control" onchange="renderMonthlyRecapView()"></select>
+          <button class="btn btn-indigo" onclick="exportRecapPDF()">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+            <span>Cetak / Simpan Rekapan ke PDF</span>
+          </button>
+        </div>
+
+        <div class="gp-two no-print">
+          <div class="card bg-stripes-dark" style="text-align: center; padding: 18px;">
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Pemasukan Bulan Ini</div>
+            <div style="font-size: 18px; font-weight: 900; color: #10B981; margin-top: 4px;" id="recapSelectedInc">Rp 0</div>
+          </div>
+          <div class="card bg-stripes-dark" style="text-align: center; padding: 18px;">
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Pengeluaran Bulan Ini</div>
+            <div style="font-size: 18px; font-weight: 900; color: #FF2E93; margin-top: 4px;" id="recapSelectedExp">Rp 0</div>
+          </div>
+        </div>
+
+        <div class="card no-print">
+          <div class="flex justify-between items-center">
+            <span style="font-size: 12px; font-weight: 700; color: var(--text-muted);">Rata-Rata Pengeluaran Harian</span>
+            <span style="font-size: 14px; font-weight: 900; color: #FFFFFF;" id="recapDailyAvg">Rp 0 / hari</span>
+          </div>
+        </div>
+
+        <div class="card no-print" style="background: var(--primary-gradient); color: #09090B; border: none; text-align: center;">
+          <div style="font-size: 11px; font-weight: 800; opacity: 0.85;">SISA SALDO BERSIH PERIODE INI</div>
+          <div style="font-size: 26px; font-weight: 900; margin-top: 2px;" id="recapSelectedNet">Rp 0</div>
+        </div>
+
+        <div class="card" style="padding: 18px;">
+          <div style="font-size: 15px; font-weight: 800; color: #FFFFFF; margin-bottom: 8px;">Daftar Transaksi Bulan Ini</div>
+          <div id="recapMonthTxList">
+            <div style="text-align: center; color: var(--text-muted); font-size: 12px; padding: 16px 0;">Tidak ada transaksi di bulan ini</div>
+          </div>
+        </div>
+
+        <div class="print-footer">
+          <div>Dicetak Otomatis dari Aplikasi DompetKu Tiwi</div>
+          <div id="printGeneratedTimestamp">Tanggal Cetak: -</div>
+        </div>
+      </div>
+
+      <!-- ================= TAB: KALENDER KEUANGAN ================= -->
+      <div id="tabKalender" class="flex flex-col gap-3 hidden">
+        <div class="card">
+          <div class="flex justify-between items-center" style="margin-bottom: 12px;">
+            <button class="btn btn-gray" style="width: auto; padding: 8px 14px;" onclick="changeCalendarMonth(-1)">
+              <svg class="icon-svg icon-sm" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <h3 style="font-size: 15px; font-weight: 800; color: #FFFFFF;" id="calMonthTitle">Bulan</h3>
+            <button class="btn btn-gray" style="width: auto; padding: 8px 14px;" onclick="changeCalendarMonth(1)">
+              <svg class="icon-svg icon-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+
+          <div class="calendar-grid">
+            <div class="cal-day-head">Ming</div>
+            <div class="cal-day-head">Sen</div>
+            <div class="cal-day-head">Sel</div>
+            <div class="cal-day-head">Rab</div>
+            <div class="cal-day-head">Kam</div>
+            <div class="cal-day-head">Jum</div>
+            <div class="cal-day-head">Sab</div>
+          </div>
+
+          <div class="calendar-grid" id="calendarDaysGrid"></div>
+        </div>
+
+        <div class="card">
+          <div class="flex justify-between items-center" style="margin-bottom: 10px;">
+            <span style="font-size: 14px; font-weight: 800; color: #FFFFFF;" id="selectedDateTitle">Transaksi Tanggal ini</span>
+            <span class="badge-tag">Rincian</span>
+          </div>
+          <div id="calDateTxList">
+            <div style="text-align: center; color: var(--text-muted); font-size: 12px; padding: 16px 0;">Pilih tanggal untuk melihat transaksi</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 2: PEMASUKAN ================= -->
+      <div id="tabPemasukan" class="flex flex-col gap-3 hidden">
+        <div class="card bg-stripes-dark" style="text-align: center;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Total Pemasukan</div>
+          <div style="font-size: 28px; font-weight: 900; color: #10B981; margin-top: 4px;" id="pageIncTotal">Rp 0</div>
+        </div>
+        <div class="card">
+          <div style="font-size: 15px; font-weight: 800; color: #FFFFFF; margin-bottom: 12px;">Rekap Per Kategori</div>
+          <div id="recapIncList" class="flex flex-col gap-2"></div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 3: PENGELUARAN ================= -->
+      <div id="tabPengeluaran" class="flex flex-col gap-3 hidden">
+        <div class="card bg-stripes-dark" style="text-align: center;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Total Pengeluaran</div>
+          <div style="font-size: 28px; font-weight: 900; color: #FF2E93; margin-top: 4px;" id="pageExpTotal">Rp 0</div>
+        </div>
+        <div class="card">
+          <div style="font-size: 15px; font-weight: 800; color: #FFFFFF; margin-bottom: 12px;">Rekap Per Kategori</div>
+          <div id="recapExpList" class="flex flex-col gap-2"></div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 4: TABUNGAN ================= -->
+      <div id="tabTabungan" class="flex flex-col gap-3 hidden">
+        <div class="card" style="background: var(--primary-gradient); color: #09090B; border: none;">
+          <div style="font-size: 11px; font-weight: 800; opacity: 0.85; text-transform: uppercase;">Tabungan Terkumpul</div>
+          <div style="font-size: 30px; font-weight: 900; margin-top: 2px; letter-spacing: -0.6px;" id="pageSavTotal">Rp 0</div>
+          <div style="margin-top: 16px;">
+            <div class="flex justify-between" style="font-size: 11px; font-weight: 800;">
+              <span>Progress Target</span>
+              <span id="txtPercent">0%</span>
+            </div>
+            <div class="progress-bg" style="background: rgba(9, 9, 11, 0.25);">
+              <div class="progress-fill" id="barSavings" style="background: #09090B;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card flex flex-col gap-2" style="font-size: 13px;">
+          <div class="flex justify-between items-center" style="padding-bottom: 10px; border-bottom: 1px solid var(--border-subtle);">
+            <span style="color: var(--text-muted);">Target Tabungan</span>
+            <div class="flex items-center gap-2">
+              <span style="font-weight: 800; color: #FFFFFF;" id="txtTargetGoal">Rp 3.000.000</span>
+              <span style="color: #FF2E93; cursor: pointer;" onclick="openModal('modalTarget')">
+                <svg class="icon-svg icon-sm" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              </span>
+            </div>
+          </div>
+          <div class="flex justify-between items-center" style="padding-bottom: 10px; border-bottom: 1px solid var(--border-subtle);">
+            <span style="color: var(--text-muted);">Terkumpul</span>
+            <span style="font-weight: 800; color: #10B981;" id="txtCollectedSav">Rp 0</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span style="color: var(--text-muted);">Sisa Kurang</span>
+            <span style="font-weight: 800; color: #FF2E93;" id="txtRemainSav">Rp 3.000.000</span>
+          </div>
+        </div>
+        <button class="btn btn-indigo" onclick="openModal('modalTambah', 'savings')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <span>Setor Tabungan Sekarang</span>
+        </button>
+      </div>
+
+      <!-- ================= TAB 5: CATATAN PRIBADI ================= -->
+      <div id="tabCatatan" class="flex flex-col gap-3 hidden">
+        <div class="card">
+          <div class="flex justify-between items-center" style="margin-bottom: 12px;">
+            <span style="font-size: 15px; font-weight: 800; color: #FFFFFF;">Catatan Pribadi</span>
+            <button class="btn btn-indigo" style="width: auto; padding: 8px 14px; font-size: 11px;" onclick="openAddNoteModal()">
+              <svg class="icon-svg icon-sm" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+              <span>Buat Catatan</span>
+            </button>
+          </div>
+          <input type="text" id="searchNoteInput" class="form-control" placeholder="Cari judul atau isi catatan..." onkeyup="renderNotes()">
+          <div id="listCatatan" style="margin-top: 8px;">
+            <div style="text-align: center; color: var(--text-muted); font-size: 12px; padding: 24px 0;">Belum ada catatan pribadi</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FLOATING ACTION BUTTON (+) DINAMIS -->
+    <button class="fab" id="mainFabBtn" onclick="triggerFabAction()">
+      <svg class="icon-svg icon-lg" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+    </button>
+
+    <!-- FLOATING GLASSMORPHIC PILL BOTTOM NAVIGATION BAR -->
+    <div class="bottom-nav">
+      <button class="nav-btn active" id="navBeranda" onclick="switchTab('Beranda')">
+        <span class="nav-ico"><svg class="icon-svg" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+      </button>
+      <button class="nav-btn" id="navRekapanBulanan" onclick="switchTab('RekapanBulanan')">
+        <span class="nav-ico"><svg class="icon-svg" viewBox="0 0 24 24"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg></span>
+      </button>
+      <button class="nav-btn" id="navKalender" onclick="switchTab('Kalender')">
+        <span class="nav-ico"><svg class="icon-svg" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg></span>
+      </button>
+      <button class="nav-btn" id="navTabungan" onclick="switchTab('Tabungan')">
+        <span class="nav-ico"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+      </button>
+      <button class="nav-btn" id="navCatatan" onclick="switchTab('Catatan')">
+        <span class="nav-ico"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODALS SECTION ================= -->
+
+<!-- MODAL MOTIVASI -->
+<div class="modal-overlay hidden" id="modalMotivasi">
+  <div class="modal-card" style="text-align: center;">
+    <h3 style="font-size: 18px; font-weight: 800; color: #FFFFFF;" id="motivationalTitle">Motivasi Hari Ini</h3>
+    <p style="font-size: 13px; color: var(--text-sub); margin-top: 12px; margin-bottom: 22px; line-height: 1.6;" id="motivationalQuoteText">
+      "Setiap rupiah yang disisihkan hari ini adalah kebebasan finansial di masa depan. Semangat!"
+    </p>
+    <button class="btn btn-indigo" onclick="closeModal('modalMotivasi')">Siap, Semangat Hari Ini!</button>
+  </div>
+</div>
+
+<!-- MODAL LOGIN (LOGO DOMPETTIWI + FOTO PROFIL TETAP UTUH) -->
+<div class="modal-overlay" id="modalLogin">
+  <div class="login-wrap">
+    <div class="login-brand">
+      <svg viewBox="0 0 40 40" width="46" height="46" aria-hidden="true">
+        <path d="M6 14 C6 6 10 4 16 4 H32" fill="none" stroke="#FF2E93" stroke-width="5" stroke-linecap="round"/>
+        <rect x="4" y="13" width="30" height="24" rx="8" fill="#FF2E93"/>
+        <rect x="18" y="20" width="5" height="10" rx="2.5" fill="#09090B"/>
+      </svg>
+      <span>dompettiwi</span>
+    </div>
+
+    <img class="login-photo" src="data:image/jpeg;base64,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" alt="Foto profil">
+
+    <div class="login-actions">
+      <button class="login-btn login-btn-primary" onclick="lanjutkanUser()">Lanjutkan sebagai <span id="loginName">tiwi</span></button>
+      <button class="login-btn login-btn-dark" onclick="showCustomInput()">Buat akun baru</button>
+    </div>
+
+    <div id="boxCustomName" class="hidden" style="width: 100%; text-align: left;">
+      <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Nama Anda:</label>
+      <input type="text" id="inputName" class="form-control" placeholder="Contoh: Tiwi">
+      <button class="btn btn-indigo" onclick="confirmUser(document.getElementById('inputName').value)">Simpan Nama</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL TAMBAH TRANSAKSI -->
+<div class="modal-overlay hidden" id="modalTambah">
+  <div class="modal-card">
+    <div class="flex justify-between items-center" style="margin-bottom: 14px;">
+      <h3 style="font-size: 16px; font-weight: 800; color: #FFFFFF;">Catat Transaksi Baru</h3>
+      <button onclick="closeModal('modalTambah')" style="background: none; border: none; font-size: 18px; cursor: pointer; color: #A1A1AA;">✕</button>
+    </div>
+    <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Jenis Transaksi:</label>
+    <select id="inType" class="form-control" onchange="updateCategoryOptions()">
+      <option value="income">Pemasukan (+)</option>
+      <option value="expense">Pengeluaran (-)</option>
+      <option value="savings">Setor Tabungan</option>
+    </select>
+    <div id="boxCategory">
+      <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Kategori:</label>
+      <select id="inCategory" class="form-control"></select>
+    </div>
+    <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Metode Simpan / Bayar:</label>
+    <select id="inMethod" class="form-control">
+      <option value="E-Wallet">E-Wallet (GoPay / Dana / OVO)</option>
+      <option value="Cash">Cash (Uang Tunai)</option>
+    </select>
+    <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Nominal (Rp):</label>
+    <input type="text" id="inAmount" class="form-control" inputmode="numeric" placeholder="0" onkeyup="formatNumberInput(this)">
+    <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Tanggal:</label>
+    <input type="date" id="inDate" class="form-control">
+    <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Catatan (Opsional):</label>
+    <input type="text" id="inNote" class="form-control" placeholder="Keterangan tambahan">
+    
+    <!-- OPSI LAMPIRKAN NOTA (KAMERA & GALERI) -->
+    <div style="margin-bottom: 14px;">
+      <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Bukti Nota / Struk (Opsional):</label>
+      <div class="flex gap-2" style="margin-top: 6px;">
+        <button type="button" class="btn btn-gray" style="padding: 10px 8px; font-size: 11px;" onclick="document.getElementById('inReceiptCam').click()">
+          <svg class="icon-svg icon-sm" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <span>Ambil Foto</span>
+        </button>
+        <button type="button" class="btn btn-gray" style="padding: 10px 8px; font-size: 11px;" onclick="document.getElementById('inReceiptFile').click()">
+          <svg class="icon-svg icon-sm" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+          <span>Pilih Galeri</span>
+        </button>
+      </div>
+      <input type="file" id="inReceiptCam" accept="image/*" capture="environment" class="hidden" onchange="handleReceiptUpload(this)">
+      <input type="file" id="inReceiptFile" accept="image/*" class="hidden" onchange="handleReceiptUpload(this)">
+      <div id="receiptPreviewBox" class="hidden" style="margin-top: 10px; position: relative; text-align: center; background: #09090B; padding: 8px; border-radius: 12px; border: 1px dashed #FF2E93;">
+        <img id="receiptPreviewImg" src="" style="max-height: 110px; border-radius: 8px; display: block; margin: 0 auto;">
+        <button type="button" onclick="removeReceiptPhoto()" style="margin-top: 6px; background: rgba(255, 46, 147, 0.2); color: #F472B6; border: none; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer;">Hapus Foto Nota</button>
+      </div>
+    </div>
+
+    <button class="btn btn-indigo" onclick="saveTx()">Simpan Transaksi</button>
+  </div>
+</div>
+
+<!-- MODAL TAMBAH / EDIT CATATAN PRIBADI -->
+<div class="modal-overlay hidden" id="modalTambahCatatan">
+  <div class="modal-card">
+    <div class="flex justify-between items-center" style="margin-bottom: 14px;">
+      <h3 style="font-size: 16px; font-weight: 800; color: #FFFFFF;" id="noteModalTitle">Buat Catatan Baru</h3>
+      <button onclick="closeModal('modalTambahCatatan')" style="background: none; border: none; font-size: 18px; cursor: pointer; color: #A1A1AA;">✕</button>
+    </div>
+    <input type="hidden" id="noteEditId" value="">
+    <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Judul Catatan:</label>
+    <input type="text" id="noteTitle" class="form-control" placeholder="Contoh: Rencana Belanja Bulanan">
+    <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Kategori / Label:</label>
+    <select id="noteTag" class="form-control">
+      <option value="Umum">Umum</option>
+      <option value="Rencana">Rencana</option>
+      <option value="Target">Target</option>
+      <option value="Penting">Penting</option>
+      <option value="Ide">Ide</option>
+    </select>
+    <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Isi Catatan:</label>
+    <textarea id="noteContent" class="form-control" rows="5" placeholder="Tulis catatan lengkap Anda di sini..." style="resize: vertical;"></textarea>
+    <button class="btn btn-indigo" onclick="saveNote()">Simpan Catatan</button>
+  </div>
+</div>
+
+<!-- MODAL BACA DETAIL CATATAN PRIBADI -->
+<div class="modal-overlay hidden" id="modalDetailCatatan">
+  <div class="modal-card">
+    <div class="flex justify-between items-center" style="margin-bottom: 10px;">
+      <span class="badge-tag" id="detailNoteTag">Umum</span>
+      <button onclick="closeModal('modalDetailCatatan')" style="background: none; border: none; font-size: 18px; cursor: pointer; color: #A1A1AA;">✕</button>
+    </div>
+    <h3 style="font-size: 18px; font-weight: 900; color: #FFFFFF; margin-bottom: 4px;" id="detailNoteTitle">Judul</h3>
+    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 14px;" id="detailNoteDate">Tanggal</div>
+    <div style="background: #09090B; padding: 14px; border-radius: 14px; font-size: 13px; color: var(--text-sub); line-height: 1.6; border: 1px solid var(--border-subtle); white-space: pre-wrap; max-height: 260px; overflow-y: auto; margin-bottom: 18px;" id="detailNoteBody">Isi</div>
+    <div class="flex gap-2">
+      <button class="btn btn-gray" style="color: #FF2E93;" onclick="editCurrentDetailNote()">Edit Catatan</button>
+      <button class="btn btn-indigo" onclick="closeModal('modalDetailCatatan')">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PREVIEW FOTO NOTA -->
+<div class="modal-overlay hidden" id="modalPreviewNota">
+  <div class="modal-card" style="text-align: center;">
+    <div class="flex justify-between items-center" style="margin-bottom: 12px;">
+      <h3 style="font-size: 16px; font-weight: 800; color: #FFFFFF;">Bukti Nota Transaksi</h3>
+      <button onclick="closeModal('modalPreviewNota')" style="background: none; border: none; font-size: 18px; cursor: pointer; color: #A1A1AA;">✕</button>
+    </div>
+    <div style="background: #09090B; padding: 10px; border-radius: 14px; border: 1px solid var(--border-subtle); margin-bottom: 16px;">
+      <img id="modalPreviewNotaImg" src="" style="max-width: 100%; max-height: 60vh; border-radius: 8px; display: block; margin: 0 auto;">
+    </div>
+    <button class="btn btn-indigo" onclick="closeModal('modalPreviewNota')">Tutup Pratinjau</button>
+  </div>
+</div>
+
+<!-- MODAL KALKULATOR -->
+<div class="modal-overlay hidden" id="modalKalkulator">
+  <div class="modal-card">
+    <div class="flex justify-between items-center" style="margin-bottom: 12px;">
+      <h3 style="font-size: 16px; font-weight: 800; color: #FFFFFF;">Kalkulator Keuangan</h3>
+      <button onclick="closeModal('modalKalkulator')" style="background: none; border: none; font-size: 18px; cursor: pointer; color: #A1A1AA;">✕</button>
+    </div>
+    <div class="calc-display" id="calcScreen">0</div>
+    <div class="calc-grid">
+      <button class="calc-btn calc-btn-clear" onclick="calcClear()">C</button>
+      <button class="calc-btn calc-btn-op" onclick="calcBackspace()">⌫</button>
+      <button class="calc-btn calc-btn-op" onclick="calcAppend('/')">÷</button>
+      <button class="calc-btn calc-btn-op" onclick="calcAppend('*')">×</button>
+
+      <button class="calc-btn" onclick="calcAppend('7')">7</button>
+      <button class="calc-btn" onclick="calcAppend('8')">8</button>
+      <button class="calc-btn" onclick="calcAppend('9')">9</button>
+      <button class="calc-btn calc-btn-op" onclick="calcAppend('-')">−</button>
+
+      <button class="calc-btn" onclick="calcAppend('4')">4</button>
+      <button class="calc-btn" onclick="calcAppend('5')">5</button>
+      <button class="calc-btn" onclick="calcAppend('6')">6</button>
+      <button class="calc-btn calc-btn-op" onclick="calcAppend('+')">+</button>
+
+      <button class="calc-btn" onclick="calcAppend('1')">1</button>
+      <button class="calc-btn" onclick="calcAppend('2')">2</button>
+      <button class="calc-btn" onclick="calcAppend('3')">3</button>
+      <button class="calc-btn calc-btn-op" onclick="calcAppend('000')">000</button>
+
+      <button class="calc-btn" onclick="calcAppend('0')">0</button>
+      <button class="calc-btn" onclick="calcAppend('.')">.</button>
+      <button class="calc-btn calc-btn-eq" onclick="calcEvaluate()">=</button>
+    </div>
+    <button class="btn btn-indigo" style="margin-top: 14px;" onclick="useCalcResultToTx()">
+      Gunakan Hasil Ke Transaksi
+    </button>
+  </div>
+</div>
+
+<!-- MODAL BACKUP & RESTORE -->
+<div class="modal-overlay hidden" id="modalBackup">
+  <div class="modal-card">
+    <div class="flex justify-between items-center" style="margin-bottom: 12px;">
+      <h3 style="font-size: 16px; font-weight: 800; color: #FFFFFF;">Cadangkan & Pulihkan Data</h3>
+      <button onclick="closeModal('modalBackup')" style="background: none; border: none; font-size: 18px; cursor: pointer; color: #A1A1AA;">✕</button>
+    </div>
+    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5;">
+      Simpan cadangan seluruh transaksi dan catatan pribadi Anda ke file aman (JSON), atau pulihkan dari cadangan sebelumnya.
+    </p>
+    <div class="flex flex-col gap-2">
+      <button class="btn btn-indigo" onclick="downloadBackupJSON()">Unduh File Cadangan (.JSON)</button>
+      <button class="btn btn-gray" onclick="document.getElementById('fileImportBackup').click()">Pulihkan Data Dari File</button>
+      <input type="file" id="fileImportBackup" accept=".json" class="hidden" onchange="importBackupJSON(event)">
+      <button class="btn btn-gray" style="color: #FB7185; margin-top: 8px; border-color: rgba(251, 113, 133, 0.25);" onclick="resetData()">Hapus & Reset Semua Data</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL TARGET TABUNGAN -->
+<div class="modal-overlay hidden" id="modalTarget">
+  <div class="modal-card">
+    <div class="flex justify-between items-center" style="margin-bottom: 12px;">
+      <h3 style="font-size: 16px; font-weight: 800; color: #FFFFFF;">Ubah Target Tabungan</h3>
+      <button onclick="closeModal('modalTarget')" style="background: none; border: none; font-size: 18px; cursor: pointer; color: #A1A1AA;">✕</button>
+    </div>
+    <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Target Baru (Rp):</label>
+    <input type="text" id="inGoal" class="form-control" inputmode="numeric" placeholder="3.000.000" onkeyup="formatNumberInput(this)">
+    <button class="btn btn-indigo" onclick="saveGoal()">Simpan Target</button>
+  </div>
+</div>
+
+<!-- MODAL RINCIAN SALDO -->
+<div class="modal-overlay hidden" id="modalSaldo">
+  <div class="modal-card">
+    <div class="flex justify-between items-center" style="margin-bottom: 14px;">
+      <h3 style="font-size: 16px; font-weight: 800; color: #FFFFFF;">Rincian Lokasi Dana</h3>
+      <button onclick="closeModal('modalSaldo')" style="background: none; border: none; font-size: 18px; cursor: pointer; color: #A1A1AA;">✕</button>
+    </div>
+    <div class="flex flex-col gap-2" style="font-size: 13px;">
+      <div class="flex justify-between items-center" style="background: var(--card-elevated); padding: 14px; border-radius: 16px; border: 1px solid var(--border-subtle);">
+        <div>
+          <div style="font-weight: 800; color: #FFFFFF;">Saldo E-Wallet</div>
+          <div style="font-size: 10px; color: var(--text-muted);">GoPay / Dana / OVO</div>
+        </div>
+        <div style="font-weight: 900; color: #FF2E93; font-size: 15px;" id="modalBalEwallet">Rp 0</div>
+      </div>
+      <div class="flex justify-between items-center" style="background: var(--card-elevated); padding: 14px; border-radius: 16px; border: 1px solid var(--border-subtle);">
+        <div>
+          <div style="font-weight: 800; color: #FFFFFF;">Saldo Cash</div>
+          <div style="font-size: 10px; color: var(--text-muted);">Uang Tunai</div>
+        </div>
+        <div style="font-weight: 900; color: #10B981; font-size: 15px;" id="modalBalCash">Rp 0</div>
+      </div>
+      <div class="flex justify-between items-center" style="background: var(--card-elevated); padding: 14px; border-radius: 16px; border: 1px solid var(--border-subtle);">
+        <div>
+          <div style="font-weight: 800; color: #FFFFFF;">Tabungan Tersimpan</div>
+          <div style="font-size: 10px; color: var(--text-muted);">Total Target</div>
+        </div>
+        <div style="font-weight: 900; color: #F472B6; font-size: 15px;" id="modalBalSavings">Rp 0</div>
+      </div>
+      <div class="flex justify-between items-center" style="background: var(--primary-gradient); color: #09090B; padding: 16px; border-radius: 18px; margin-top: 6px;">
+        <div style="font-weight: 800; font-size: 13px;">Total Kekayaan Bersih</div>
+        <div style="font-weight: 900; font-size: 17px;" id="modalBalTotal">Rp 0</div>
+      </div>
+    </div>
+    <button class="btn btn-gray" style="margin-top: 16px;" onclick="closeModal('modalSaldo')">Tutup</button>
+  </div>
+</div>
+
+<script>
+const DB_USER = 'dompet_tiwi_user';
+const DB_GOAL = 'dompet_tiwi_target';
+const DB_TX   = 'dompet_tiwi_tx';
+const DB_NOTES = 'dompet_tiwi_notes';
+
+let user = localStorage.getItem(DB_USER) || '';
+let goal = Number(localStorage.getItem(DB_GOAL)) || 3000000;
+let transactions = JSON.parse(localStorage.getItem(DB_TX) || '[]');
+let notes = JSON.parse(localStorage.getItem(DB_NOTES) || '[]');
+let currentActiveTab = 'Beranda';
+let currentReceiptDataUrl = '';
+let currentViewingNoteId = null;
+
+// Calendar state
+let calDate = new Date();
+let selectedCalDateStr = new Date().toISOString().split('T')[0];
+
+const categories = {
+  income: ['Gaji Bulanan', 'THR / Bonus', 'Hasil Usaha', 'Hadiah / Pemberian', 'Lainnya'],
+  expense: ['Makan & Minum', 'Belanja Bulanan', 'Skincare & Makeup', 'Baju & Fashion', 'Transportasi & Bensin', 'Tagihan & Kuota', 'Hiburan & Jalan', 'Lainnya'],
+  savings: ['Setor Tabungan']
+};
+
+const motivationalQuotes = [
+  "Setiap rupiah yang disisihkan hari ini adalah kebebasan finansial di masa depan.",
+  "Jangan menabung apa yang tersisa setelah belanja, tapi belanjakan apa yang tersisa setelah menabung.",
+  "Kebiasaan kecil mencatat pengeluaran setiap hari akan menciptakan kekayaan besar kelak.",
+  "Kendalikan uangmu sebelum uangmu yang mengendalikan hidupmu.",
+  "Target tabunganmu semakin dekat setiap kali kamu memilih untuk berhemat hari ini.",
+  "Disiplin finansial bukan tentang membatasi diri, melainkan menghargai kerja kerasmu sendiri."
+];
+
+function formatNumberInput(el) {
+  let raw = el.value.replace(/\D/g, '');
+  if (!raw) {
+    el.value = '';
+    return;
+  }
+  el.value = Number(raw).toLocaleString('id-ID');
+}
+
+function getNumericValue(val) {
+  return Number(String(val).replace(/\./g, '').replace(/[^0-9-]/g, '')) || 0;
+}
+
+function rp(n) {
+  return 'Rp ' + Number(n || 0).toLocaleString('id-ID');
+}
+
+window.onload = () => {
+  document.getElementById('inDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('loginName').textContent = (user || 'tiwi').toLowerCase();
+  if (user) {
+    applyUser(user);
+    document.getElementById('modalLogin').classList.add('hidden');
+  }
+  updateCategoryOptions();
+  populateMonthDropdown();
+  render();
+  renderNotes();
+  renderCalendar();
+};
+
+function showCustomInput() {
+  document.getElementById('boxCustomName').classList.remove('hidden');
+}
+
+function lanjutkanUser() {
+  confirmUser(user || 'Tiwi');
+}
+
+function confirmUser(nameInput) {
+  let clean = (nameInput || '').trim() || 'Tiwi';
+  user = clean;
+  localStorage.setItem(DB_USER, user);
+  applyUser(user);
+  document.getElementById('modalLogin').classList.add('hidden');
+  
+  const randQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+  document.getElementById('motivationalTitle').innerText = `Halo, ${user}! Semangat Hari Ini`;
+  document.getElementById('motivationalQuoteText').innerText = `"${randQuote}"`;
+  openModal('modalMotivasi');
+}
+
+function applyUser(name) {
+  let initial = name.charAt(0).toUpperCase();
+  const dtName = document.getElementById('dtDisplayName');
+  const dtAv = document.getElementById('dtAvatar');
+  const heroName = document.getElementById('heroName');
+  if (dtName) dtName.innerText = name;
+  if (dtAv) dtAv.innerText = initial;
+  if (heroName) heroName.innerText = name;
+}
+
+/* ================= DRAWER & NAVIGATION ================= */
+function toggleDrawer() {
+  const drawer = document.getElementById('sideDrawer');
+  const backdrop = document.getElementById('drawerBackdrop');
+  drawer.classList.toggle('open');
+  backdrop.classList.toggle('show');
+}
+
+function navigateFromDrawer(tabName) {
+  toggleDrawer();
+  switchTab(tabName);
+}
+
+function switchTab(tabName) {
+  currentActiveTab = tabName;
+  const tabs = ['Beranda', 'RekapanBulanan', 'Kalender', 'Pemasukan', 'Pengeluaran', 'Tabungan', 'Catatan'];
+  const titles = {
+    Beranda: 'Overview Keuangan',
+    RekapanBulanan: 'Rekapan Keuangan Bulanan',
+    Kalender: 'Kalender Keuangan',
+    Pemasukan: 'Pemasukan',
+    Pengeluaran: 'Pengeluaran',
+    Tabungan: 'Target Tabungan',
+    Catatan: 'Catatan Pribadi'
+  };
+
+  tabs.forEach(t => {
+    const el = document.getElementById('tab' + t);
+    if (el) el.classList.add('hidden');
+    const nav = document.getElementById('nav' + t);
+    if (nav) nav.classList.remove('active');
+    const snav = document.getElementById('sideNav' + t);
+    if (snav) snav.classList.remove('active');
+  });
+
+  const activeEl = document.getElementById('tab' + tabName);
+  if (activeEl) activeEl.classList.remove('hidden');
+  const activeNav = document.getElementById('nav' + tabName);
+  if (activeNav) activeNav.classList.add('active');
+  const activeSideNav = document.getElementById('sideNav' + tabName);
+  if (activeSideNav) activeSideNav.classList.add('active');
+
+  document.getElementById('pageTitle').innerText = titles[tabName] || 'DompetKu';
+
+  const hBtn = document.getElementById('headerActionBtn');
+  if (tabName === 'Catatan') {
+    hBtn.innerHTML = `<svg class="icon-svg" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg><span>Buat Catatan</span>`;
+    hBtn.onclick = openAddNoteModal;
+  } else {
+    hBtn.innerHTML = `<svg class="icon-svg" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg><span>Catat Transaksi</span>`;
+    hBtn.onclick = () => openModal('modalTambah');
+  }
+
+  if (tabName === 'RekapanBulanan') {
+    populateMonthDropdown();
+    renderMonthlyRecapView();
+  } else if (tabName === 'Kalender') {
+    renderCalendar();
+  } else if (tabName === 'Catatan') {
+    renderNotes();
+  }
+}
+
+function triggerFabAction() {
+  if (currentActiveTab === 'Catatan') {
+    openAddNoteModal();
+  } else {
+    openModal('modalTambah');
+  }
+}
+
+function setFilter(type) {
+  const sel = document.getElementById('filterCategorySelect');
+  if (sel) sel.value = type;
+  syncChips();
+  render();
+}
+
+function syncChips() {
+  const val = document.getElementById('filterCategorySelect')?.value || 'ALL';
+  ['ALL', 'income', 'expense', 'savings'].forEach(k => {
+    const chip = document.getElementById('chip-' + k);
+    if (chip) chip.classList.toggle('active', k === val);
+  });
+}
+
+function openModal(id, presetType) {
+  if (id === 'modalTambah') {
+    if (presetType) document.getElementById('inType').value = presetType;
+    updateCategoryOptions();
+    removeReceiptPhoto();
+  }
+  if (id === 'modalTarget') {
+    document.getElementById('inGoal').value = Number(goal).toLocaleString('id-ID');
+  }
+  document.getElementById(id).classList.remove('hidden');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.add('hidden');
+}
+
+function updateCategoryOptions() {
+  let type = document.getElementById('inType').value;
+  let sel = document.getElementById('inCategory');
+  let box = document.getElementById('boxCategory');
+  if (type === 'savings') {
+    box.classList.add('hidden');
+  } else {
+    box.classList.remove('hidden');
+    sel.innerHTML = (categories[type] || []).map(c => `<option value="${c}">${c}</option>`).join('');
+  }
+}
+
+/* ================= UPLOAD FOTO NOTA ================= */
+function handleReceiptUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      const MAX_WIDTH = 600;
+      let width = img.width;
+      let height = img.height;
+
+      if (width > MAX_WIDTH) {
+        height = Math.round((height * MAX_WIDTH) / width);
+        width = MAX_WIDTH;
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+
+      currentReceiptDataUrl = canvas.toDataURL('image/jpeg', 0.65);
+      document.getElementById('receiptPreviewImg').src = currentReceiptDataUrl;
+      document.getElementById('receiptPreviewBox').classList.remove('hidden');
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeReceiptPhoto() {
+  currentReceiptDataUrl = '';
+  document.getElementById('inReceiptCam').value = '';
+  document.getElementById('inReceiptFile').value = '';
+  document.getElementById('receiptPreviewImg').src = '';
+  document.getElementById('receiptPreviewBox').classList.add('hidden');
+}
+
+function viewReceipt(txId) {
+  const tx = transactions.find(t => t.id === txId);
+  if (tx && tx.receipt) {
+    document.getElementById('modalPreviewNotaImg').src = tx.receipt;
+    openModal('modalPreviewNota');
+  }
+}
+
+/* ================= SIMPAN TRANSAKSI ================= */
+function saveTx() {
+  let type = document.getElementById('inType').value;
+  let cat = type === 'savings' ? 'Setor Tabungan' : document.getElementById('inCategory').value;
+  let method = document.getElementById('inMethod').value;
+  let amount = getNumericValue(document.getElementById('inAmount').value);
+  let date = document.getElementById('inDate').value || new Date().toISOString().split('T')[0];
+  let note = document.getElementById('inNote').value.trim();
+
+  if (!amount || amount <= 0) return;
+
+  transactions.unshift({
+    id: Date.now(),
+    type,
+    category: cat,
+    method,
+    amount,
+    date,
+    note,
+    receipt: currentReceiptDataUrl || ''
+  });
+
+  try {
+    localStorage.setItem(DB_TX, JSON.stringify(transactions));
+  } catch (e) {
+    transactions[0].receipt = '';
+    localStorage.setItem(DB_TX, JSON.stringify(transactions));
+  }
+
+  document.getElementById('inAmount').value = '';
+  document.getElementById('inNote').value = '';
+  removeReceiptPhoto();
+  closeModal('modalTambah');
+  render();
+  renderCalendar();
+}
+
+function delTx(id) {
+  transactions = transactions.filter(t => t.id !== id);
+  localStorage.setItem(DB_TX, JSON.stringify(transactions));
+  render();
+  renderCalendar();
+  if (currentActiveTab === 'RekapanBulanan') {
+    renderMonthlyRecapView();
+  }
+}
+
+function saveGoal() {
+  let val = getNumericValue(document.getElementById('inGoal').value);
+  if (val > 0) {
+    goal = val;
+    localStorage.setItem(DB_GOAL, goal);
+    closeModal('modalTarget');
+    render();
+  }
+}
+
+/* ================= FITUR REKAPAN PER BULAN & PDF ================= */
+function populateMonthDropdown() {
+  const sel = document.getElementById('selectMonthPeriod');
+  if (!sel) return;
+  const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+  const currentMonthKey = new Date().toISOString().slice(0, 7);
+
+  let keys = new Set([currentMonthKey]);
+  transactions.forEach(t => {
+    if (t.date && t.date.length >= 7) {
+      keys.add(t.date.slice(0, 7));
+    }
+  });
+
+  const sortedKeys = Array.from(keys).sort().reverse();
+  const prevValue = sel.value;
+
+  sel.innerHTML = sortedKeys.map(k => {
+    const [y, m] = k.split('-');
+    const label = `${monthNames[parseInt(m, 10) - 1]} ${y}`;
+    return `<option value="${k}">${label}</option>`;
+  }).join('');
+
+  if (prevValue && sortedKeys.includes(prevValue)) {
+    sel.value = prevValue;
+  } else {
+    sel.value = currentMonthKey;
+  }
+}
+
+function renderMonthlyRecapView() {
+  const sel = document.getElementById('selectMonthPeriod');
+  if (!sel) return;
+  const selectedMonth = sel.value;
+  const periodText = sel.options[sel.selectedIndex]?.text || selectedMonth;
+
+  let mInc = 0, mExp = 0;
+  let monthTxs = [];
+
+  transactions.forEach(t => {
+    if (t.date && t.date.startsWith(selectedMonth)) {
+      monthTxs.push(t);
+      if (t.type === 'income') mInc += t.amount;
+      if (t.type === 'expense') mExp += t.amount;
+    }
+  });
+
+  const [y, m] = selectedMonth.split('-');
+  const daysInMonth = new Date(parseInt(y), parseInt(m), 0).getDate();
+  const dailyAvg = Math.round(mExp / daysInMonth);
+  const netMonth = mInc - mExp;
+
+  document.getElementById('recapSelectedInc').innerText = rp(mInc);
+  document.getElementById('recapSelectedExp').innerText = rp(mExp);
+  document.getElementById('recapDailyAvg').innerText = rp(dailyAvg) + ' / hari';
+  document.getElementById('recapSelectedNet').innerText = rp(netMonth);
+
+  document.getElementById('printPeriodTitle').innerText = 'Periode: ' + periodText;
+  document.getElementById('printIncVal').innerText = rp(mInc);
+  document.getElementById('printExpVal').innerText = rp(mExp);
+  document.getElementById('printDailyAvgVal').innerText = rp(dailyAvg);
+  document.getElementById('printNetVal').innerText = rp(netMonth);
+
+  const now = new Date();
+  document.getElementById('printGeneratedTimestamp').innerText = `Dicetak pada: ${now.toLocaleDateString('id-ID')} ${now.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'})}`;
+
+  const listEl = document.getElementById('recapMonthTxList');
+  if (monthTxs.length === 0) {
+    listEl.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-size: 12px; padding: 16px 0;">Tidak ada transaksi tercatat pada periode ini.</div>`;
+  } else {
+    let tableRows = monthTxs.map((t, index) => {
+      let typeLabel = t.type === 'income' ? 'Pemasukan' : (t.type === 'expense' ? 'Pengeluaran' : 'Tabungan');
+      let color = t.type === 'income' ? '#10B981' : (t.type === 'expense' ? '#FF2E93' : '#F472B6');
+      let prefix = t.type === 'income' ? '+' : (t.type === 'expense' ? '-' : '');
+      return `
+        <tr>
+          <td style="font-weight: 700; color: var(--text-muted);">${index + 1}</td>
+          <td style="white-space: nowrap;">${t.date}</td>
+          <td><span style="font-weight: 800; color: ${color};">${typeLabel}</span></td>
+          <td style="font-weight: 700;">${t.category}</td>
+          <td style="color: var(--text-muted);">${t.method || 'Cash'}</td>
+          <td>${t.note ? escapeHTML(t.note) : '<span style="color:#52525B;">-</span>'}</td>
+          <td style="text-align: right; font-weight: 900; color: ${color}; white-space: nowrap;">${prefix}${rp(t.amount)}</td>
+        </tr>
+      `;
+    }).join('');
+
+    listEl.innerHTML = `
+      <div class="pdf-table-container">
+        <table class="pdf-table">
+          <thead>
+            <tr>
+              <th style="width: 30px;">No</th>
+              <th>Tanggal</th>
+              <th>Jenis</th>
+              <th>Kategori</th>
+              <th>Metode</th>
+              <th>Keterangan</th>
+              <th style="text-align: right;">Nominal</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableRows}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+}
+
+function exportRecapPDF() {
+  renderMonthlyRecapView();
+  window.print();
+}
+
+/* ================= KALENDER KEUANGAN ================= */
+function changeCalendarMonth(delta) {
+  calDate.setMonth(calDate.getMonth() + delta);
+  renderCalendar();
+}
+
+function renderCalendar() {
+  const year = calDate.getFullYear();
+  const month = calDate.getMonth();
+  const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+  
+  document.getElementById('calMonthTitle').innerText = `${monthNames[month]} ${year}`;
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const txDatesMap = {};
+  transactions.forEach(t => {
+    if (!txDatesMap[t.date]) txDatesMap[t.date] = [];
+    txDatesMap[t.date].push(t);
+  });
+
+  const gridEl = document.getElementById('calendarDaysGrid');
+  let html = '';
+
+  for (let i = 0; i < firstDay; i++) {
+    html += `<div class="cal-date-cell empty"></div>`;
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const hasTx = txDatesMap[dStr] && txDatesMap[dStr].length > 0;
+    const isActive = selectedCalDateStr === dStr;
+
+    html += `
+      <div class="cal-date-cell ${isActive ? 'active-date' : ''}" onclick="selectCalDate('${dStr}')">
+        <span>${day}</span>
+        ${hasTx ? '<div class="cal-dot"></div>' : '<div style="height:5px;"></div>'}
+      </div>
+    `;
+  }
+
+  gridEl.innerHTML = html;
+  selectCalDate(selectedCalDateStr, false);
+}
+
+function selectCalDate(dateStr, reRenderGrid = true) {
+  selectedCalDateStr = dateStr;
+  if (reRenderGrid) renderCalendar();
+
+  document.getElementById('selectedDateTitle').innerText = `Transaksi Tgl ${dateStr}`;
+  const dayTxs = transactions.filter(t => t.date === dateStr);
+  const listEl = document.getElementById('calDateTxList');
+
+  if (dayTxs.length === 0) {
+    listEl.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-size: 12px; padding: 14px 0;">Tidak ada transaksi pada tanggal ini</div>`;
+  } else {
+    listEl.innerHTML = dayTxs.map(t => {
+      let color = t.type === 'income' ? '#10B981' : (t.type === 'expense' ? '#FF2E93' : '#F472B6');
+      let prefix = t.type === 'income' ? '+' : (t.type === 'expense' ? '-' : '');
+      let receiptTag = t.receipt ? `<span class="receipt-tag" onclick="viewReceipt(${t.id})">Lihat Nota</span>` : '';
+      return `
+        <div class="tx-item">
+          <div>
+            <div style="font-weight: 800; color: #FFFFFF;">${t.category} ${receiptTag}</div>
+            <div style="font-size: 11px; color: var(--text-muted);">${t.method} ${t.note ? '• ' + escapeHTML(t.note) : ''}</div>
+          </div>
+          <div style="font-weight: 900; color: ${color};">${prefix}${rp(t.amount)}</div>
+        </div>
+      `;
+    }).join('');
+  }
+}
+
+/* ================= CATATAN PRIBADI ================= */
+function openAddNoteModal() {
+  document.getElementById('noteModalTitle').innerText = 'Buat Catatan Baru';
+  document.getElementById('noteEditId').value = '';
+  document.getElementById('noteTitle').value = '';
+  document.getElementById('noteTag').value = 'Umum';
+  document.getElementById('noteContent').value = '';
+  openModal('modalTambahCatatan');
+}
+
+function saveNote() {
+  const editId = document.getElementById('noteEditId').value;
+  const title = document.getElementById('noteTitle').value.trim();
+  const tag = document.getElementById('noteTag').value;
+  const content = document.getElementById('noteContent').value.trim();
+
+  if (!title && !content) return;
+
+  const nowStr = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+  if (editId) {
+    const idx = notes.findIndex(n => String(n.id) === String(editId));
+    if (idx !== -1) {
+      notes[idx].title = title || 'Tanpa Judul';
+      notes[idx].tag = tag;
+      notes[idx].content = content;
+      notes[idx].updatedAt = nowStr;
+    }
+  } else {
+    notes.unshift({
+      id: Date.now(),
+      title: title || 'Tanpa Judul',
+      tag,
+      content,
+      createdAt: nowStr
+    });
+  }
+
+  localStorage.setItem(DB_NOTES, JSON.stringify(notes));
+  closeModal('modalTambahCatatan');
+  renderNotes();
+}
+
+function openDetailNote(id) {
+  const note = notes.find(n => n.id === id);
+  if (!note) return;
+  currentViewingNoteId = id;
+  document.getElementById('detailNoteTag').innerText = note.tag || 'Umum';
+  document.getElementById('detailNoteTitle').innerText = note.title;
+  document.getElementById('detailNoteDate').innerText = note.updatedAt ? `Diperbarui: ${note.updatedAt}` : `Dibuat: ${note.createdAt}`;
+  document.getElementById('detailNoteBody').innerText = note.content || '(Tidak ada isi catatan)';
+  openModal('modalDetailCatatan');
+}
+
+function editCurrentDetailNote() {
+  if (!currentViewingNoteId) return;
+  const note = notes.find(n => n.id === currentViewingNoteId);
+  if (!note) return;
+
+  closeModal('modalDetailCatatan');
+  document.getElementById('noteModalTitle').innerText = 'Edit Catatan';
+  document.getElementById('noteEditId').value = note.id;
+  document.getElementById('noteTitle').value = note.title;
+  document.getElementById('noteTag').value = note.tag || 'Umum';
+  document.getElementById('noteContent').value = note.content;
+  openModal('modalTambahCatatan');
+}
+
+function deleteNote(event, id) {
+  event.stopPropagation();
+  notes = notes.filter(n => n.id !== id);
+  localStorage.setItem(DB_NOTES, JSON.stringify(notes));
+  renderNotes();
+}
+
+function renderNotes() {
+  const listEl = document.getElementById('listCatatan');
+  if (!listEl) return;
+
+  const q = (document.getElementById('searchNoteInput')?.value || '').toLowerCase();
+  const filtered = notes.filter(n => n.title.toLowerCase().includes(q) || n.content.toLowerCase().includes(q));
+
+  if (filtered.length === 0) {
+    listEl.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-size: 12px; padding: 24px 0;">Tidak ada catatan ditemukan</div>`;
+    return;
+  }
+
+  listEl.innerHTML = filtered.map(n => `
+    <div class="note-card" onclick="openDetailNote(${n.id})">
+      <div class="flex justify-between items-center" style="margin-bottom: 6px;">
+        <span class="badge-tag">${n.tag || 'Umum'}</span>
+        <button onclick="deleteNote(event, ${n.id})" style="background: none; border: none; color: #FB7185; font-size: 11px; font-weight: 700; cursor: pointer;">Hapus</button>
+      </div>
+      <div style="font-size: 15px; font-weight: 800; color: #FFFFFF; margin-bottom: 4px;">${escapeHTML(n.title)}</div>
+      <div style="font-size: 12px; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">${escapeHTML(n.content)}</div>
+      <div style="font-size: 10px; color: #71717A; margin-top: 8px;">${n.updatedAt || n.createdAt} • Ketuk untuk baca</div>
+    </div>
+  `).join('');
+}
+
+function escapeHTML(str) {
+  return String(str || '').replace(/[&<>'"]/g, tag => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+  }[tag]));
+}
+
+/* ================= KALKULATOR ================= */
+let calcExpression = '';
+function calcAppend(val) {
+  calcExpression += val;
+  document.getElementById('calcScreen').innerText = calcExpression;
+}
+function calcClear() {
+  calcExpression = '';
+  document.getElementById('calcScreen').innerText = '0';
+}
+function calcBackspace() {
+  calcExpression = calcExpression.slice(0, -1);
+  document.getElementById('calcScreen').innerText = calcExpression || '0';
+}
+function calcEvaluate() {
+  try {
+    if (!calcExpression) return;
+    let sanitized = calcExpression.replace(/[^0-9+\-*/.]/g, '');
+    let result = Function('"use strict";return (' + sanitized + ')')();
+    if (!isFinite(result)) throw new Error('Math error');
+    result = Math.round(result * 100) / 100;
+    calcExpression = String(result);
+    document.getElementById('calcScreen').innerText = Number(result).toLocaleString('id-ID');
+  } catch (e) {
+    document.getElementById('calcScreen').innerText = 'Error';
+    calcExpression = '';
+  }
+}
+function useCalcResultToTx() {
+  let cleanVal = getNumericValue(document.getElementById('calcScreen').innerText);
+  if (cleanVal > 0) {
+    closeModal('modalKalkulator');
+    openModal('modalTambah');
+    document.getElementById('inAmount').value = cleanVal.toLocaleString('id-ID');
+  }
+}
+
+/* ================= BACKUP & RESTORE ================= */
+function downloadBackupJSON() {
+  const backupData = {
+    user: user,
+    goal: goal,
+    transactions: transactions,
+    notes: notes,
+    exportedAt: new Date().toISOString()
+  };
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2));
+  const dlAnchor = document.createElement('a');
+  dlAnchor.setAttribute("href", dataStr);
+  dlAnchor.setAttribute("download", `DompetKu_${user || 'Tiwi'}_Backup.json`);
+  document.body.appendChild(dlAnchor);
+  dlAnchor.click();
+  dlAnchor.remove();
+}
+
+function importBackupJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      if (parsed.transactions && Array.isArray(parsed.transactions)) {
+        transactions = parsed.transactions;
+        localStorage.setItem(DB_TX, JSON.stringify(transactions));
+      }
+      if (parsed.notes && Array.isArray(parsed.notes)) {
+        notes = parsed.notes;
+        localStorage.setItem(DB_NOTES, JSON.stringify(notes));
+      }
+      if (parsed.goal) {
+        goal = Number(parsed.goal);
+        localStorage.setItem(DB_GOAL, goal);
+      }
+      if (parsed.user) {
+        user = parsed.user;
+        localStorage.setItem(DB_USER, user);
+        applyUser(user);
+      }
+      closeModal('modalBackup');
+      populateMonthDropdown();
+      render();
+      renderNotes();
+      renderCalendar();
+    } catch (err) {}
+  };
+  reader.readAsText(file);
+}
+
+/* ================= RENDER DATA UTAMA ================= */
+function render() {
+  let inc = 0, exp = 0, sav = 0;
+  let balEwallet = 0, balCash = 0;
+  let incCat = {}, expCat = {};
+  let monthlyStats = {};
+
+  transactions.forEach(t => {
+    let m = t.method || 'Cash';
+    let monthKey = t.date ? t.date.slice(0, 7) : 'Unknown';
+    if (!monthlyStats[monthKey]) monthlyStats[monthKey] = { inc: 0, exp: 0 };
+
+    if (t.type === 'income') {
+      inc += t.amount;
+      monthlyStats[monthKey].inc += t.amount;
+      incCat[t.category] = (incCat[t.category] || 0) + t.amount;
+      if (m === 'E-Wallet') balEwallet += t.amount; else balCash += t.amount;
+    } else if (t.type === 'expense') {
+      exp += t.amount;
+      monthlyStats[monthKey].exp += t.amount;
+      expCat[t.category] = (expCat[t.category] || 0) + t.amount;
+      if (m === 'E-Wallet') balEwallet -= t.amount; else balCash -= t.amount;
+    } else if (t.type === 'savings') {
+      sav += t.amount;
+      if (m === 'E-Wallet') balEwallet -= t.amount; else balCash -= t.amount;
+    }
+  });
+
+  let cashAvailable = inc - exp - sav;
+  let netWorth = cashAvailable + sav;
+
+  document.getElementById('txtNetWorth').innerText = rp(netWorth);
+  document.getElementById('dashInc').innerText = rp(inc);
+  document.getElementById('dashExp').innerText = rp(exp);
+  document.getElementById('pageIncTotal').innerText = rp(inc);
+  document.getElementById('pageExpTotal').innerText = rp(exp);
+  document.getElementById('pageSavTotal').innerText = rp(sav);
+
+  document.getElementById('modalBalEwallet').innerText = rp(balEwallet);
+  document.getElementById('modalBalCash').innerText = rp(balCash);
+  document.getElementById('modalBalSavings').innerText = rp(sav);
+  document.getElementById('modalBalTotal').innerText = rp(netWorth);
+
+  // Status Arus Kas
+  const sCard = document.getElementById('statusCard');
+  const sBadge = document.getElementById('statusBadge');
+  const sTitle = document.getElementById('statusTitle');
+  const sDesc = document.getElementById('statusDesc');
+
+  if (inc === 0 && exp === 0) {
+    sCard.style.borderLeftColor = '#52525B';
+    sBadge.style.background = '#26262C';
+    sBadge.style.color = '#A1A1AA';
+    sBadge.innerText = 'Belum Ada Data';
+    sTitle.innerText = 'Evaluasi Arus Kas';
+    sDesc.innerText = 'Tambahkan catatan transaksi untuk mulai menganalisis rasio pengeluaran Anda.';
+  } else {
+    let ratio = inc > 0 ? (exp / inc) * 100 : 100;
+    if (ratio <= 50) {
+      sCard.style.borderLeftColor = '#10B981';
+      sBadge.style.background = 'rgba(16, 185, 129, 0.16)';
+      sBadge.style.color = '#10B981';
+      sBadge.innerText = 'Sangat Sehat';
+      sTitle.innerText = 'Arus Kas Sangat Terkendali';
+      sDesc.innerText = `Pengeluaran baru mencapai ${Math.round(ratio)}% dari pemasukan. Pertahankan konsistensi menabung Anda.`;
+    } else if (ratio <= 80) {
+      sCard.style.borderLeftColor = '#F59E0B';
+      sBadge.style.background = 'rgba(245, 158, 11, 0.16)';
+      sBadge.style.color = '#FBBF24';
+      sBadge.innerText = 'Cukup Aman';
+      sTitle.innerText = 'Waspadai Pengeluaran';
+      sDesc.innerText = `Pengeluaran sudah memakai ${Math.round(ratio)}% pemasukan. Bijaklah dalam berbelanja kebutuhan tambahan.`;
+    } else {
+      sCard.style.borderLeftColor = '#FF2E93';
+      sBadge.style.background = 'rgba(255, 46, 147, 0.16)';
+      sBadge.style.color = '#FF2E93';
+      sBadge.innerText = 'Perlu Perhatian';
+      sTitle.innerText = 'Pengeluaran Melebihi Batas Ideal';
+      sDesc.innerText = `Rasio pengeluaran Anda mencapai ${Math.round(ratio)}%. Segera evaluasi dan kurangi pengeluaran tidak mendesak.`;
+    }
+  }
+
+  // Grafik 6 Bulan Terakhir (Striped Bars vs Neon Pink Active Bar)
+  const chartEl = document.getElementById('chartContainer');
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+  let chartMonths = [];
+  let now = new Date();
+  for (let i = 5; i >= 0; i--) {
+    let d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    let key = d.toISOString().slice(0, 7);
+    chartMonths.push({
+      key,
+      label: monthNames[d.getMonth()],
+      inc: (monthlyStats[key] && monthlyStats[key].inc) || 0,
+      exp: (monthlyStats[key] && monthlyStats[key].exp) || 0
+    });
+  }
+
+  let maxVal = Math.max(100000, ...chartMonths.map(m => Math.max(m.inc, m.exp)));
+  chartEl.innerHTML = chartMonths.map((m, idx) => {
+    let incH = Math.max(8, Math.round((m.inc / maxVal) * 100));
+    let expH = Math.max(8, Math.round((m.exp / maxVal) * 100));
+    const isLatest = idx === chartMonths.length - 1;
+    const incClass = isLatest ? '' : 'bg-stripes-bar';
+    const expClass = isLatest ? '' : 'bg-stripes-bar';
+    const incStyle = isLatest ? 'background: #10B981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.45);' : '';
+    const expStyle = isLatest ? 'background: #FF2E93; box-shadow: 0 0 14px rgba(255, 46, 147, 0.55);' : '';
+
+    return `
+      <div class="flex flex-col items-center" style="flex: 1;">
+        <div class="chart-bar-group">
+          <div class="chart-bar ${incClass}" style="height: ${incH}px; ${incStyle}" title="Masuk: ${rp(m.inc)}"></div>
+          <div class="chart-bar ${expClass}" style="height: ${expH}px; ${expStyle}" title="Keluar: ${rp(m.exp)}"></div>
+        </div>
+        <span style="font-size: 11px; font-weight: 800; color: ${isLatest ? '#FF2E93' : '#71717A'}; margin-top: 8px;">${m.label}</span>
+      </div>
+    `;
+  }).join('');
+
+  // Target Tabungan
+  let pct = Math.min(100, Math.round((sav / goal) * 100)) || 0;
+  document.getElementById('txtPercent').innerText = pct + '%';
+  document.getElementById('barSavings').style.width = pct + '%';
+  document.getElementById('txtTargetGoal').innerText = rp(goal);
+  document.getElementById('txtCollectedSav').innerText = rp(sav);
+  document.getElementById('txtRemainSav').innerText = rp(Math.max(0, goal - sav));
+
+  // Filter & Search Riwayat
+  let searchQ = (document.getElementById('searchTxInput')?.value || '').toLowerCase();
+  let filterCat = document.getElementById('filterCategorySelect')?.value || 'ALL';
+
+  let filteredTx = transactions.filter(t => {
+    let matchType = filterCat === 'ALL' || t.type === filterCat;
+    let matchText = t.category.toLowerCase().includes(searchQ) || (t.note && t.note.toLowerCase().includes(searchQ)) || (t.method && t.method.toLowerCase().includes(searchQ));
+    return matchType && matchText;
+  });
+
+  document.getElementById('txCount').innerText = filteredTx.length + ' Catatan';
+  const listEl = document.getElementById('listRiwayat');
+
+  if (filteredTx.length === 0) {
+    listEl.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-size: 12px; padding: 24px 0;">Tidak ada transaksi yang sesuai</div>`;
+  } else {
+    listEl.innerHTML = filteredTx.map(t => {
+      let color = t.type === 'income' ? '#10B981' : (t.type === 'expense' ? '#FF2E93' : '#F472B6');
+      let prefix = t.type === 'income' ? '+' : (t.type === 'expense' ? '-' : '');
+      let mBadge = t.method === 'E-Wallet' ? 'E-Wallet' : 'Cash';
+      let receiptTag = t.receipt ? `<span class="receipt-tag" onclick="viewReceipt(${t.id})">Lihat Nota</span>` : '';
+      return `
+        <div class="tx-item">
+          <div>
+            <div style="font-weight: 800; color: #FFFFFF; margin-bottom: 2px;">${t.category} ${receiptTag}</div>
+            <div style="font-size: 11px; color: var(--text-muted);">${t.date} • ${mBadge} ${t.note ? '• ' + escapeHTML(t.note) : ''}</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-weight: 900; color: ${color};">${prefix}${rp(t.amount)}</div>
+            <button onclick="delTx(${t.id})" style="background: none; border: none; color: #71717A; font-size: 10px; font-weight: 700; cursor: pointer; margin-top: 2px;">Hapus</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Rekap Kategori
+  const renderRecap = (obj, elId, color) => {
+    const el = document.getElementById(elId);
+    const keys = Object.keys(obj);
+    if (keys.length === 0) {
+      el.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-size: 12px; padding: 12px 0;">Belum ada data</div>`;
+      return;
+    }
+    el.innerHTML = keys.map(k => `
+      <div class="flex justify-between items-center" style="background: var(--card-elevated); padding: 14px 16px; border-radius: 16px; font-size: 13px; border: 1px solid var(--border-subtle);">
+        <span style="font-weight: 700; color: #FFFFFF;">${k}</span>
+        <span style="font-weight: 900; color: ${color};">${rp(obj[k])}</span>
+      </div>
+    `).join('');
+  };
+
+  renderRecap(incCat, 'recapIncList', '#10B981');
+  renderRecap(expCat, 'recapExpList', '#FF2E93');
+}
+
+function resetData() {
+  localStorage.clear();
+  location.reload();
+}
+</script>
+</body>
+</html>
