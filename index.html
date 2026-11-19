@@ -1253,6 +1253,43 @@ body{background-attachment:scroll}
 .txd-actions{display:flex;gap:10px;padding:18px 22px 22px}
 .txd-actions .btn{flex:1}
 .txd-del{background:rgba(225,29,72,.14) !important;color:#FB7185 !important;border:1px solid rgba(225,29,72,.35) !important}
+
+/* ================= KARTU DEBIT (RINCIAN SALDO) ================= */
+.dcard{position:relative;border-radius:20px;padding:15px 18px 14px;color:#fff;overflow:hidden;aspect-ratio:1.85/1;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 14px 28px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.35);isolation:isolate}
+.dcard::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,rgba(255,255,255,.2) 0 34%,transparent 34.2%)}
+.dcard::after{content:'';position:absolute;right:-50px;top:-60px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22),transparent 68%);z-index:-1}
+.dcard-digital{background:linear-gradient(135deg,#ff2e93 0%,#c026d3 55%,#6d28d9 100%)}
+.dcard-cash{background:linear-gradient(135deg,#10b981 0%,#0d9488 55%,#0e7490 100%)}
+.dcard-top{display:flex;justify-content:space-between;align-items:center}
+.dcard-brand{font-size:14px;font-weight:800;letter-spacing:.4px;opacity:.95}
+.dcard-chip{width:38px;height:28px;border-radius:7px;background:linear-gradient(135deg,#fde68a,#f59e0b 55%,#fcd34d);position:relative;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.dcard-chip::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(0,0,0,.25)}
+.dcard-chip::after{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(0,0,0,.25)}
+.dcard-lbl{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;opacity:.85}
+.dcard-bal{font-size:24px;font-weight:900;letter-spacing:.5px;margin-top:2px;text-shadow:0 2px 8px rgba(0,0,0,.25);word-break:break-all}
+.dcard-bot{display:flex;justify-content:space-between;align-items:flex-end}
+.dcard-sub{font-size:9.5px;font-weight:600;opacity:.8}
+.dcard-name{font-size:12px;font-weight:800;letter-spacing:1px;margin-top:2px}
+.dcard-circles{display:flex}
+.dcard-circles i{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.4)}
+.dcard-circles i+i{margin-left:-12px;background:rgba(255,255,255,.28)}
+.dcard-savings{background:linear-gradient(135deg,#38bdf8 0%,#2563eb 55%,#4f46e5 100%)}
+.dcard-pager{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -26px;padding:4px 26px 18px;scroll-padding:0 26px;cursor:grab;overscroll-behavior-x:contain}
+.dcard-pager::-webkit-scrollbar{display:none}
+.dcard-pager.dragging{scroll-snap-type:none;cursor:grabbing;user-select:none}
+.dcard-pager .dcard{flex:0 0 88%;scroll-snap-align:center;min-width:0}
+.dcard-dots{display:flex;justify-content:center;gap:7px;margin:-6px 0 16px}
+.dcard-dots button{width:7px;height:7px;border-radius:999px;border:0;padding:0;background:#3F3F46;cursor:pointer;transition:all .25s}
+.dcard-dots button.on{width:20px;background:#FF2E93}
+.nw-card{background:var(--primary-gradient);color:#09090B;padding:16px;border-radius:18px}
+.nw-top{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.nw-lbl{font-weight:800;font-size:11px;letter-spacing:.8px;text-transform:uppercase;opacity:.75}
+.nw-val{font-weight:900;font-size:22px;letter-spacing:.3px;word-break:break-all}
+.nw-bar{display:flex;height:9px;border-radius:999px;overflow:hidden;background:rgba(9,9,11,.18);margin:12px 0 10px}
+.nw-bar i{display:block;height:100%;transition:width .5s cubic-bezier(.16,1,.3,1)}
+.nw-legend{display:flex;justify-content:space-between;gap:6px;font-size:10px;font-weight:800}
+.nw-legend span{display:flex;align-items:center;gap:5px}
+.nw-legend em{width:8px;height:8px;border-radius:50%;display:inline-block;font-style:normal;box-shadow:0 0 0 1.5px rgba(255,255,255,.55)}
 </style>
 </head>
 <body>
@@ -2107,31 +2144,58 @@ body{background-attachment:scroll}
       <h3 style="font-size: 16px; font-weight: 800; color: #FFFFFF;">Rincian Lokasi Dana</h3>
       <button onclick="closeModal('modalSaldo')" style="background: none; border: none; font-size: 18px; cursor: pointer; color: #A1A1AA;">✕</button>
     </div>
-    <div class="flex flex-col gap-2" style="font-size: 13px;">
-      <div class="flex justify-between items-center" style="background: var(--card-elevated); padding: 14px; border-radius: 16px; border: 1px solid var(--border-subtle);">
-        <div>
-          <div style="font-weight: 800; color: #FFFFFF;">Saldo Digital</div>
-          <div style="font-size: 10px; color: var(--text-muted);">E-Wallet, bank, & aplikasi keuangan</div>
+    <div style="font-size: 13px;">
+      <div class="dcard-pager" id="saldoPager">
+        <div class="dcard dcard-digital">
+          <div class="dcard-top"><span class="dcard-chip"></span><span class="dcard-brand">Digital</span></div>
+          <div>
+            <div class="dcard-lbl">Saldo Digital</div>
+            <div class="dcard-bal" id="modalBalEwallet">Rp 0</div>
+          </div>
+          <div class="dcard-bot">
+            <div><div class="dcard-sub">E-Wallet, bank &amp; aplikasi keuangan</div><div class="dcard-name">TIWI</div></div>
+            <div class="dcard-circles"><i></i><i></i></div>
+          </div>
         </div>
-        <div style="font-weight: 900; color: #FF2E93; font-size: 15px;" id="modalBalEwallet">Rp 0</div>
-      </div>
-      <div class="flex justify-between items-center" style="background: var(--card-elevated); padding: 14px; border-radius: 16px; border: 1px solid var(--border-subtle);">
-        <div>
-          <div style="font-weight: 800; color: #FFFFFF;">Saldo Cash</div>
-          <div style="font-size: 10px; color: var(--text-muted);">Uang Tunai</div>
+        <div class="dcard dcard-cash">
+          <div class="dcard-top"><span class="dcard-chip"></span><span class="dcard-brand">Cash</span></div>
+          <div>
+            <div class="dcard-lbl">Saldo Cash</div>
+            <div class="dcard-bal" id="modalBalCash">Rp 0</div>
+          </div>
+          <div class="dcard-bot">
+            <div><div class="dcard-sub">Uang tunai / dompet</div><div class="dcard-name">TIWI</div></div>
+            <div class="dcard-circles"><i></i><i></i></div>
+          </div>
         </div>
-        <div style="font-weight: 900; color: #10B981; font-size: 15px;" id="modalBalCash">Rp 0</div>
-      </div>
-      <div class="flex justify-between items-center" style="background: var(--card-elevated); padding: 14px; border-radius: 16px; border: 1px solid var(--border-subtle);">
-        <div>
-          <div style="font-weight: 800; color: #FFFFFF;">Tabungan Tersimpan</div>
-          <div style="font-size: 10px; color: var(--text-muted);">Total Target</div>
+        <div class="dcard dcard-savings">
+          <div class="dcard-top"><span class="dcard-chip"></span><span class="dcard-brand">Tabungan</span></div>
+          <div>
+            <div class="dcard-lbl">Tabungan Tersimpan</div>
+            <div class="dcard-bal" id="modalBalSavings">Rp 0</div>
+          </div>
+          <div class="dcard-bot">
+            <div><div class="dcard-sub"><span id="modalSavGoal">Target Rp 0</span></div><div class="dcard-name">TIWI</div></div>
+            <div class="dcard-circles"><i></i><i></i></div>
+          </div>
         </div>
-        <div style="font-weight: 900; color: #F472B6; font-size: 15px;" id="modalBalSavings">Rp 0</div>
       </div>
-      <div class="flex justify-between items-center" style="background: var(--primary-gradient); color: #09090B; padding: 16px; border-radius: 18px; margin-top: 6px;">
-        <div style="font-weight: 800; font-size: 13px;">Total Kekayaan Bersih</div>
-        <div style="font-weight: 900; font-size: 17px;" id="modalBalTotal">Rp 0</div>
+      <div class="dcard-dots" id="saldoDots">
+        <button class="on" aria-label="Digital" onclick="goSaldoCard(0)"></button>
+        <button aria-label="Cash" onclick="goSaldoCard(1)"></button>
+        <button aria-label="Tabungan" onclick="goSaldoCard(2)"></button>
+      </div>
+      <div class="nw-card">
+        <div class="nw-top">
+          <div class="nw-lbl">Total Kekayaan Bersih</div>
+          <div class="nw-val" id="modalBalTotal">Rp 0</div>
+        </div>
+        <div class="nw-bar"><i id="nwBarDig" style="background:#FF2E93;width:0"></i><i id="nwBarCash" style="background:#10B981;width:0"></i><i id="nwBarSav" style="background:#38BDF8;width:0"></i></div>
+        <div class="nw-legend">
+          <span><em style="background:#FF2E93"></em>Digital <b id="nwPctDig">0%</b></span>
+          <span><em style="background:#10B981"></em>Cash <b id="nwPctCash">0%</b></span>
+          <span><em style="background:#38BDF8"></em>Tabungan <b id="nwPctSav">0%</b></span>
+        </div>
       </div>
     </div>
     <button class="btn btn-gray" style="margin-top: 16px;" onclick="closeModal('modalSaldo')">Tutup</button>
@@ -2590,6 +2654,37 @@ function syncChips() {
   });
 }
 
+function syncSaldoDots() {
+  const pg = document.getElementById('saldoPager'); if (!pg) return;
+  const cards = pg.querySelectorAll('.dcard');
+  let idx = 0, best = Infinity;
+  const mid = pg.scrollLeft + pg.clientWidth / 2;
+  cards.forEach((c, i) => { const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < best) { best = d; idx = i; } });
+  document.querySelectorAll('#saldoDots button').forEach((b, i) => b.classList.toggle('on', i === idx));
+  return idx;
+}
+function goSaldoCard(i) {
+  const pg = document.getElementById('saldoPager'); const c = pg && pg.querySelectorAll('.dcard')[i]; if (!c) return;
+  pg.scrollTo({ left: c.offsetLeft + c.offsetWidth / 2 - pg.clientWidth / 2, behavior: 'smooth' });
+}
+(function initSaldoPager() {
+  const pg = document.getElementById('saldoPager'); if (!pg) return;
+  pg.addEventListener('scroll', syncSaldoDots, { passive: true });
+  // drag dengan mouse (desktop)
+  let down = false, sx = 0, sl = 0, moved = false;
+  pg.addEventListener('mousedown', e => { down = true; moved = false; sx = e.pageX; sl = pg.scrollLeft; });
+  window.addEventListener('mousemove', e => {
+    if (!down) return;
+    const dx = e.pageX - sx;
+    if (Math.abs(dx) > 4) { moved = true; pg.classList.add('dragging'); }
+    if (moved) pg.scrollLeft = sl - dx;
+  });
+  window.addEventListener('mouseup', () => {
+    if (!down) return; down = false;
+    if (moved) { pg.classList.remove('dragging'); goSaldoCard(syncSaldoDots()); }
+  });
+})();
+
 function openModal(id, presetType) {
   if (id === 'modalTambah') {
     if (presetType) document.getElementById('inType').value = presetType;
@@ -2597,6 +2692,8 @@ function openModal(id, presetType) {
     removeReceiptPhoto();
   }
   if (id === 'modalProfil') fillProfileForm();
+  if (id === 'modalSaldo') document.querySelectorAll('.dcard-name').forEach(e => { e.innerText = (user || 'Tiwi').toUpperCase(); });
+  if (id === 'modalSaldo') setTimeout(() => { const pg = document.getElementById('saldoPager'); if (pg) { pg.scrollLeft = 0; syncSaldoDots(); } }, 0);
   if (id === 'modalTarget') {
     document.getElementById('inGoal').value = Number(goal).toLocaleString('id-ID');
   }
@@ -3165,6 +3262,16 @@ function render() {
   document.getElementById('modalBalCash').innerText = rp(balCash);
   document.getElementById('modalBalSavings').innerText = rp(sav);
   document.getElementById('modalBalTotal').innerText = rp(netWorth);
+  const _sg = document.getElementById('modalSavGoal'); if (_sg) _sg.innerText = 'Target ' + rp(Number(goal) || 0);
+  {
+    const pd = Math.max(balEwallet, 0), pc = Math.max(balCash, 0), ps = Math.max(sav, 0), pt = pd + pc + ps;
+    const pct = v => pt > 0 ? (v / pt) * 100 : 0;
+    [['Dig', pd], ['Cash', pc], ['Sav', ps]].forEach(([k, v]) => {
+      const b = document.getElementById('nwBar' + k), t = document.getElementById('nwPct' + k);
+      if (b) b.style.width = pct(v) + '%';
+      if (t) t.innerText = Math.round(pct(v)) + '%';
+    });
+  }
 
   // Status Arus Kas
   const sCard = document.getElementById('statusCard');
